@@ -1,0 +1,232 @@
+[
+  {
+    "timestamp": "2026-01-11T21:52:13.583182",
+    "day_of_week": "Sunday",
+    "time": "09:52 PM",
+    "best_route": "Route 1: Uhuru Park \u2192 Ngong Road \u2192 Mombasa Road",
+    "best_time": "5 mins",
+    "all_routes": [
+      {
+        "name": "Route 1: Uhuru Park \u2192 Ngong Road \u2192 Mombasa Road",
+        "duration_seconds": 321,
+        "duration_text": "5 mins",
+        "distance": "2.3 km",
+        "distance_value": 2270,
+        "has_traffic_data": false
+      },
+      {
+        "name": "Route 2: Uhuru Park \u2192 Ngong Road \u2192 Expressway \u2192 Airport North Road",
+        "duration_seconds": 321,
+        "duration_text": "5 mins",
+        "distance": "2.3 km",
+        "distance_value": 2270,
+        "has_traffic_data": false
+      },
+      {
+        "name": "Route 3: Uhuru Park \u2192 Ngong Road \u2192 Mombasa Road \u2192 Likoni Road",
+        "duration_seconds": 321,
+        "duration_text": "5 mins",
+        "distance": "2.3 km",
+        "distance_value": 2270,
+        "has_traffic_data": false
+      },
+      {
+        "name": "Route 4: Hurlingham \u2192 Kenyatta Hospital \u2192 Raila Odinga Way \u2192 Mombasa Road",
+        "duration_seconds": 420,
+        "duration_text": "7 mins",
+        "distance": "2.9 km",
+        "distance_value": 2910,
+        "has_traffic_data": false
+      },
+      {
+        "name": "Route 5: Hurlingham \u2192 Kenyatta Hospital \u2192 Raila Odinga Way \u2192 Likoni Road",
+        "duration_seconds": 420,
+        "duration_text": "7 mins",
+        "distance": "2.9 km",
+        "distance_value": 2910,
+        "has_traffic_data": false
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-01-11T21:58:30.713095",
+    "day_of_week": "Sunday",
+    "time": "09:58 PM",
+    "best_route": "Route 1: Uhuru Park \u2192 Ngong Road \u2192 Mombasa Road",
+    "best_time": "7 mins",
+    "all_routes": [
+      {
+        "name": "Route 1: Uhuru Park \u2192 Ngong Road \u2192 Mombasa Road",
+        "duration_seconds": 415,
+        "duration_text": "7 mins",
+        "distance": "3.0 km",
+        "distance_value": 3012,
+        "has_traffic_data": false
+      },
+      {
+        "name": "Route 2: Uhuru Park \u2192 Ngong Road \u2192 Expressway \u2192 Airport North Road",
+        "duration_seconds": 415,
+        "duration_text": "7 mins",
+        "distance": "3.0 km",
+        "distance_value": 3012,
+        "has_traffic_data": false
+      },
+      {
+        "name": "Route 3: Uhuru Park \u2192 Ngong Road \u2192 Mombasa Road \u2192 Likoni Road",
+        "duration_seconds": 415,
+        "duration_text": "7 mins",
+        "distance": "3.0 km",
+        "distance_value": 3012,
+        "has_traffic_data": false
+      },
+      {
+        "name": "Route 4: Hurlingham \u2192 Kenyatta Hospital \u2192 Raila Odinga \u2192 Mombasa Road",
+        "duration_seconds": 533,
+        "duration_text": "9 mins",
+        "distance": "3.1 km",
+        "distance_value": 3104,
+        "has_traffic_data": false
+      },
+      {
+        "name": "Route 5: Hurlingham \u2192 Kenyatta Hospital \u2192 Raila Odinga \u2192 Likoni Road",
+        "duration_seconds": 533,
+        "duration_text": "9 mins",
+        "distance": "3.1 km",
+        "distance_value": 3104,
+        "has_traffic_data": false
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-01-12T00:15:10.005554",
+    "day_of_week": "Monday",
+    "time": "12:15 AM",
+    "best_route": "Route 1: Via Mombasa Road",
+    "best_time": "2 mins",
+    "all_routes": [
+      {
+        "name": "Route 1: Via Mombasa Road",
+        "duration_seconds": 141,
+        "duration_text": "2 mins",
+        "distance": "1.0 km",
+        "distance_value": 1030,
+        "has_traffic_data": false
+      },
+      {
+        "name": "Route 2: Via Expressway to Airport North Road",
+        "duration_seconds": 141,
+        "duration_text": "2 mins",
+        "distance": "1.0 km",
+        "distance_value": 1030,
+        "has_traffic_data": false
+      },
+      {
+        "name": "Route 3: Via Likoni Road & Lunga Lunga",
+        "duration_seconds": 141,
+        "duration_text": "2 mins",
+        "distance": "1.0 km",
+        "distance_value": 1030,
+        "has_traffic_data": false
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-01-12T08:52:38.327738",
+    "day_of_week": "Monday",
+    "time": "08:52 AM",
+    "best_route": "Route 1: Via Mombasa Road",
+    "best_time": "2 mins",
+    "all_routes": [
+      {
+        "name": "Route 1: Via Mombasa Road",
+        "duration_seconds": 141,
+        "duration_text": "2 mins",
+        "distance": "1.0 km",
+        "distance_value": 1030,
+        "has_traffic_data": false
+      },
+      {
+        "name": "Route 2: Via Expressway to Airport North Road",
+        "duration_seconds": 141,
+        "duration_text": "2 mins",
+        "distance": "1.0 km",
+        "distance_value": 1030,
+        "has_traffic_data": false
+      },
+      {
+        "name": "Route 3: Via Likoni Road & Lunga Lunga",
+        "duration_seconds": 141,
+        "duration_text": "2 mins",
+        "distance": "1.0 km",
+        "distance_value": 1030,
+        "has_traffic_data": false
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-01-12T08:59:15.196901",
+    "day_of_week": "Monday",
+    "time": "08:59 AM",
+    "best_route": "Route 1: Via Mombasa Road",
+    "best_time": "2 mins",
+    "all_routes": [
+      {
+        "name": "Route 1: Via Mombasa Road",
+        "duration_seconds": 141,
+        "duration_text": "2 mins",
+        "distance": "1.0 km",
+        "distance_value": 1030,
+        "has_traffic_data": false
+      },
+      {
+        "name": "Route 2: Via Expressway to Airport North Road",
+        "duration_seconds": 141,
+        "duration_text": "2 mins",
+        "distance": "1.0 km",
+        "distance_value": 1030,
+        "has_traffic_data": false
+      },
+      {
+        "name": "Route 3: Via Likoni Road & Lunga Lunga",
+        "duration_seconds": 141,
+        "duration_text": "2 mins",
+        "distance": "1.0 km",
+        "distance_value": 1030,
+        "has_traffic_data": false
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-01-12T09:00:58.299336",
+    "day_of_week": "Monday",
+    "time": "09:00 AM",
+    "best_route": "Route 1: Via Mombasa Road",
+    "best_time": "33 mins",
+    "all_routes": [
+      {
+        "name": "Route 1: Via Mombasa Road",
+        "duration_seconds": 2035,
+        "duration_text": "33 mins",
+        "distance": "18.5 km",
+        "distance_value": 18474,
+        "has_traffic_data": false
+      },
+      {
+        "name": "Route 3: Via Likoni Road & Lunga Lunga",
+        "duration_seconds": 2365,
+        "duration_text": "39 mins",
+        "distance": "18.9 km",
+        "distance_value": 18919,
+        "has_traffic_data": false
+      },
+      {
+        "name": "Route 2: Via Expressway to Airport North Road",
+        "duration_seconds": 2998,
+        "duration_text": "49 mins",
+        "distance": "33.4 km",
+        "distance_value": 33363,
+        "has_traffic_data": false
+      }
+    ]
+  }
+]

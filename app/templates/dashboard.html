@@ -1,0 +1,1319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nairobi Traffic Analyzer</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --bg-card: #1a1a24;
+            --accent-green: #00ff87;
+            --accent-blue: #00d4ff;
+            --accent-orange: #ff9f43;
+            --accent-red: #ff6b6b;
+            --accent-purple: #a855f7;
+            --text-primary: #ffffff;
+            --text-secondary: #8b8b9e;
+            --border-color: #2a2a3a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .bg-gradient {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(ellipse at 20% 20%, rgba(0, 255, 135, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(0, 212, 255, 0.08) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--accent-green), var(--accent-blue));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .logo h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent-green), var(--accent-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .logo span {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 1rem;
+        }
+
+        .tab {
+            padding: 0.75rem 1.5rem;
+            background: transparent;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .tab:hover {
+            border-color: var(--accent-green);
+            color: var(--text-primary);
+        }
+
+        .tab.active {
+            background: linear-gradient(135deg, var(--accent-green), var(--accent-blue));
+            color: var(--bg-primary);
+            border-color: transparent;
+        }
+
+        /* Toggle Switch */
+        .toggle-container {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.5rem 1rem;
+            background: var(--bg-card);
+            border-radius: 100px;
+        }
+
+        .toggle-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .toggle {
+            position: relative;
+            width: 48px;
+            height: 26px;
+            background: var(--bg-secondary);
+            border-radius: 13px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .toggle.active {
+            background: var(--accent-green);
+        }
+
+        .toggle::after {
+            content: '';
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            transition: transform 0.3s;
+        }
+
+        .toggle.active::after {
+            transform: translateX(22px);
+        }
+
+        .status-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: var(--bg-card);
+            border-radius: 100px;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent-green);
+            animation: pulse 2s infinite;
+        }
+
+        .status-dot.off {
+            background: var(--text-secondary);
+            animation: none;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-green), var(--accent-blue));
+            color: var(--bg-primary);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 255, 135, 0.3);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-secondary {
+            background: var(--bg-card);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--accent-green);
+        }
+
+        .btn-danger {
+            background: rgba(255, 107, 107, 0.2);
+            color: var(--accent-red);
+            border: 1px solid var(--accent-red);
+        }
+
+        .btn-sm {
+            padding: 0.5rem 1rem;
+            font-size: 0.85rem;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            margin-bottom: 1.5rem;
+        }
+
+        .card:hover {
+            border-color: rgba(0, 255, 135, 0.3);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-title {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-weight: 600;
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        @media (max-width: 1024px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Best Route Card */
+        .best-route-card {
+            grid-column: 1 / -1;
+            background: linear-gradient(135deg, rgba(0, 255, 135, 0.1), rgba(0, 212, 255, 0.05));
+            border-color: rgba(0, 255, 135, 0.3);
+        }
+
+        .best-route-content {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        @media (max-width: 640px) {
+            .best-route-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+        }
+
+        .best-route-info h2 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .best-route-meta {
+            display: flex;
+            gap: 2rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .meta-item span {
+            color: var(--text-secondary);
+        }
+
+        .time-display {
+            text-align: center;
+            padding: 1.5rem 2rem;
+            background: var(--bg-secondary);
+            border-radius: 12px;
+        }
+
+        .time-display .time {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--accent-green);
+            line-height: 1;
+        }
+
+        .time-display .unit {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            margin-top: 0.25rem;
+        }
+
+        /* Route List */
+        .route-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .route-item {
+            display: grid;
+            grid-template-columns: auto 1fr auto auto;
+            gap: 1rem;
+            align-items: center;
+            padding: 1rem;
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            transition: all 0.2s ease;
+        }
+
+        .route-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .route-item.disabled {
+            opacity: 0.5;
+        }
+
+        .route-rank {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .route-rank.gold { background: linear-gradient(135deg, #ffd700, #ffb700); color: var(--bg-primary); }
+        .route-rank.silver { background: linear-gradient(135deg, #c0c0c0, #a0a0a0); color: var(--bg-primary); }
+        .route-rank.bronze { background: linear-gradient(135deg, #cd7f32, #b5651d); color: var(--bg-primary); }
+
+        .route-name {
+            font-weight: 500;
+        }
+
+        .route-distance {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .route-time {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            background: var(--bg-card);
+            border-radius: 6px;
+        }
+
+        .route-time.fastest {
+            background: rgba(0, 255, 135, 0.2);
+            color: var(--accent-green);
+        }
+
+        .route-diff {
+            font-size: 0.85rem;
+            color: var(--accent-orange);
+        }
+
+        /* Route Management */
+        .route-manage-item {
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            gap: 1rem;
+            align-items: center;
+            padding: 1rem;
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            margin-bottom: 0.75rem;
+        }
+
+        .route-manage-item.disabled {
+            opacity: 0.6;
+        }
+
+        .route-manage-info h4 {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .route-manage-info p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .route-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-family: 'Outfit', sans-serif;
+            font-size: 1rem;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent-green);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        @media (max-width: 640px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .form-hint {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-top: 0.25rem;
+        }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 1rem;
+        }
+
+        .modal {
+            background: var(--bg-card);
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            padding: 2rem;
+            max-width: 600px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-header h3 {
+            font-size: 1.25rem;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        /* Stats */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .stat-item {
+            padding: 1rem;
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent-blue);
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-top: 0.25rem;
+        }
+
+        /* Settings */
+        .settings-section {
+            padding: 1.5rem;
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            margin-bottom: 1rem;
+        }
+
+        .settings-section h4 {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .schedule-times {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .schedule-time-tag {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: var(--bg-card);
+            border-radius: 6px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .schedule-time-tag button {
+            background: none;
+            border: none;
+            color: var(--accent-red);
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        /* Traffic indicator */
+        .traffic-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            font-size: 0.8rem;
+            padding: 0.25rem 0.5rem;
+            background: rgba(0, 255, 135, 0.1);
+            border-radius: 4px;
+            color: var(--accent-green);
+        }
+
+        .traffic-indicator.estimated {
+            background: rgba(255, 159, 67, 0.1);
+            color: var(--accent-orange);
+        }
+
+        /* Win bars */
+        .win-bar-container { margin-top: 1rem; }
+        .win-bar-item { margin-bottom: 0.75rem; }
+        .win-bar-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.25rem;
+            font-size: 0.85rem;
+        }
+        .win-bar {
+            height: 8px;
+            background: var(--bg-secondary);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .win-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-green), var(--accent-blue));
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        /* Loading & Error */
+        .loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 3rem;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--border-color);
+            border-top-color: var(--accent-green);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .error-state {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-secondary);
+        }
+
+        .last-updated {
+            text-align: center;
+            padding: 1rem;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+        }
+
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+    <div class="bg-gradient"></div>
+    
+    <div class="container">
+        <header>
+            <div class="logo">
+                <div class="logo-icon">🚗</div>
+                <div>
+                    <h1>Traffic Analyzer</h1>
+                    <span>Nairobi Commute Routes</span>
+                </div>
+            </div>
+            <div class="header-actions">
+                <div class="toggle-container">
+                    <span class="toggle-label">Auto-analyze</span>
+                    <div class="toggle" id="scheduler-toggle" onclick="toggleScheduler()"></div>
+                </div>
+                <div class="status-badge">
+                    <div class="status-dot" id="status-dot"></div>
+                    <span id="status-text">Loading...</span>
+                </div>
+                <button class="btn btn-primary" id="analyze-btn" onclick="runAnalysis()">
+                    <span>⚡</span> Analyze Now
+                </button>
+            </div>
+        </header>
+
+        <!-- Tabs -->
+        <div class="tabs">
+            <button class="tab active" onclick="showTab('dashboard')">📊 Dashboard</button>
+            <button class="tab" onclick="showTab('routes')">🗺️ Routes</button>
+            <button class="tab" onclick="showTab('settings')">⚙️ Settings</button>
+        </div>
+
+        <!-- Dashboard Tab -->
+        <main id="tab-dashboard">
+            <div class="loading">
+                <div class="spinner"></div>
+            </div>
+        </main>
+
+        <!-- Routes Tab -->
+        <div id="tab-routes" class="hidden">
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">🗺️ Manage Routes</span>
+                    <button class="btn btn-primary btn-sm" onclick="showAddRouteModal()">+ Add Route</button>
+                </div>
+                <div id="routes-list"></div>
+            </div>
+        </div>
+
+        <!-- Settings Tab -->
+        <div id="tab-settings" class="hidden">
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">⚙️ Settings</span>
+                </div>
+                
+                <div class="settings-section">
+                    <h4>📅 Scheduled Analysis</h4>
+                    <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                        <span>Enable automatic analysis on weekdays:</span>
+                        <div class="toggle" id="settings-scheduler-toggle" onclick="toggleScheduler()"></div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Add Schedule Time</label>
+                            <div style="display: flex; gap: 0.5rem;">
+                                <input type="time" id="new-schedule-time" value="17:00">
+                                <button class="btn btn-secondary btn-sm" onclick="addScheduleTime()">Add</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label style="color: var(--text-secondary); font-size: 0.9rem;">Scheduled Times:</label>
+                        <div class="schedule-times" id="schedule-times-list"></div>
+                    </div>
+                </div>
+
+                <div class="settings-section">
+                    <h4>📧 Email Notifications</h4>
+                    <div style="display: flex; align-items: center; gap: 1rem;">
+                        <span>Send email when analysis completes:</span>
+                        <div class="toggle" id="email-toggle" onclick="toggleEmail()"></div>
+                    </div>
+                    <p class="form-hint" style="margin-top: 0.5rem;">
+                        Configure email credentials in environment variables (EMAIL_SENDER, EMAIL_PASSWORD, EMAIL_RECEIVER)
+                    </p>
+                </div>
+
+                <button class="btn btn-primary" onclick="saveSettings()">Save Settings</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add/Edit Route Modal -->
+    <div class="modal-overlay hidden" id="route-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 id="modal-title">Add New Route</h3>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            
+            <form id="route-form" onsubmit="saveRoute(event)">
+                <input type="hidden" id="route-id">
+                
+                <div class="form-group">
+                    <label>Route Name *</label>
+                    <input type="text" id="route-name" required placeholder="e.g., Route 1: Via Mombasa Road">
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Origin Name</label>
+                        <input type="text" id="route-origin-name" placeholder="e.g., Pitman House">
+                    </div>
+                    <div class="form-group">
+                        <label>Destination Name</label>
+                        <input type="text" id="route-dest-name" placeholder="e.g., Home">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Origin Coordinates *</label>
+                        <input type="text" id="route-origin" required placeholder="-1.288121, 36.800852">
+                        <p class="form-hint">Latitude, Longitude</p>
+                    </div>
+                    <div class="form-group">
+                        <label>Destination Coordinates *</label>
+                        <input type="text" id="route-dest" required placeholder="-1.304990, 36.908390">
+                        <p class="form-hint">Latitude, Longitude</p>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Waypoints (Optional)</label>
+                    <textarea id="route-waypoints" placeholder="-1.2894753, 36.8096695|-1.2892811, 36.8119622"></textarea>
+                    <p class="form-hint">Pipe-separated coordinates: lat,lng|lat,lng|...</p>
+                </div>
+                
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Route</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // ==================== STATE ====================
+        let latestData = null;
+        let stats = null;
+        let routes = [];
+        let settings = {};
+
+        // ==================== API CALLS ====================
+        async function fetchLatest() {
+            try {
+                const res = await fetch('/api/latest');
+                if (res.ok) latestData = await res.json();
+                return res.ok;
+            } catch (e) { console.error('Failed to fetch latest:', e); return false; }
+        }
+
+        async function fetchStats() {
+            try {
+                const res = await fetch('/api/stats?days=7');
+                if (res.ok) stats = await res.json();
+                return res.ok;
+            } catch (e) { console.error('Failed to fetch stats:', e); return false; }
+        }
+
+        async function fetchRoutes() {
+            try {
+                const res = await fetch('/api/routes');
+                if (res.ok) routes = await res.json();
+                return res.ok;
+            } catch (e) { console.error('Failed to fetch routes:', e); return false; }
+        }
+
+        async function fetchSettings() {
+            try {
+                const res = await fetch('/api/settings');
+                if (res.ok) settings = await res.json();
+                return res.ok;
+            } catch (e) { console.error('Failed to fetch settings:', e); return false; }
+        }
+
+        async function runAnalysis() {
+            const btn = document.getElementById('analyze-btn');
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner" style="width:16px;height:16px;border-width:2px;"></span> Analyzing...';
+
+            try {
+                const res = await fetch('/api/analyze', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ send_email: settings.email_enabled })
+                });
+
+                if (res.ok) {
+                    await loadData();
+                } else {
+                    alert('Analysis failed. Check API key configuration.');
+                }
+            } catch (e) {
+                console.error('Analysis failed:', e);
+                alert('Analysis failed.');
+            }
+
+            btn.disabled = false;
+            btn.innerHTML = '<span>⚡</span> Analyze Now';
+        }
+
+        async function toggleScheduler() {
+            try {
+                const res = await fetch('/api/settings/scheduler', { method: 'POST' });
+                if (res.ok) {
+                    const data = await res.json();
+                    settings.scheduler_enabled = data.scheduler_enabled;
+                    updateSchedulerUI();
+                }
+            } catch (e) {
+                console.error('Toggle failed:', e);
+            }
+        }
+
+        async function toggleEmail() {
+            settings.email_enabled = !settings.email_enabled;
+            updateSettingsUI();
+        }
+
+        async function saveSettings() {
+            try {
+                const res = await fetch('/api/settings', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(settings)
+                });
+                if (res.ok) {
+                    alert('Settings saved!');
+                    await fetchSettings();
+                    updateSettingsUI();
+                }
+            } catch (e) {
+                console.error('Save failed:', e);
+                alert('Failed to save settings.');
+            }
+        }
+
+        // ==================== ROUTE MANAGEMENT ====================
+        function showAddRouteModal() {
+            document.getElementById('modal-title').textContent = 'Add New Route';
+            document.getElementById('route-form').reset();
+            document.getElementById('route-id').value = '';
+            document.getElementById('route-modal').classList.remove('hidden');
+        }
+
+        function editRoute(routeId) {
+            const route = routes.find(r => r.id === routeId);
+            if (!route) return;
+
+            document.getElementById('modal-title').textContent = 'Edit Route';
+            document.getElementById('route-id').value = route.id;
+            document.getElementById('route-name').value = route.name || '';
+            document.getElementById('route-origin-name').value = route.origin_name || '';
+            document.getElementById('route-dest-name').value = route.destination_name || '';
+            document.getElementById('route-origin').value = route.origin || '';
+            document.getElementById('route-dest').value = route.destination || '';
+            document.getElementById('route-waypoints').value = route.waypoints || '';
+            document.getElementById('route-modal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('route-modal').classList.add('hidden');
+        }
+
+        async function saveRoute(e) {
+            e.preventDefault();
+            
+            const routeId = document.getElementById('route-id').value;
+            const route = {
+                name: document.getElementById('route-name').value,
+                origin_name: document.getElementById('route-origin-name').value,
+                destination_name: document.getElementById('route-dest-name').value,
+                origin: document.getElementById('route-origin').value,
+                destination: document.getElementById('route-dest').value,
+                waypoints: document.getElementById('route-waypoints').value,
+                enabled: true
+            };
+
+            try {
+                const url = routeId ? `/api/routes/${routeId}` : '/api/routes';
+                const method = routeId ? 'PUT' : 'POST';
+                
+                const res = await fetch(url, {
+                    method,
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(route)
+                });
+
+                if (res.ok) {
+                    closeModal();
+                    await fetchRoutes();
+                    renderRoutes();
+                } else {
+                    alert('Failed to save route.');
+                }
+            } catch (e) {
+                console.error('Save route failed:', e);
+                alert('Failed to save route.');
+            }
+        }
+
+        async function deleteRoute(routeId) {
+            if (!confirm('Are you sure you want to delete this route?')) return;
+
+            try {
+                const res = await fetch(`/api/routes/${routeId}`, { method: 'DELETE' });
+                if (res.ok) {
+                    await fetchRoutes();
+                    renderRoutes();
+                }
+            } catch (e) {
+                console.error('Delete failed:', e);
+            }
+        }
+
+        async function toggleRoute(routeId) {
+            try {
+                const res = await fetch(`/api/routes/${routeId}/toggle`, { method: 'POST' });
+                if (res.ok) {
+                    await fetchRoutes();
+                    renderRoutes();
+                }
+            } catch (e) {
+                console.error('Toggle failed:', e);
+            }
+        }
+
+        // ==================== SCHEDULE TIMES ====================
+        function addScheduleTime() {
+            const input = document.getElementById('new-schedule-time');
+            const time = input.value;
+            
+            if (!time) return;
+            
+            const timeStr = time.substring(0, 5); // HH:MM
+            if (!settings.schedule_times) settings.schedule_times = [];
+            
+            if (!settings.schedule_times.includes(timeStr)) {
+                settings.schedule_times.push(timeStr);
+                settings.schedule_times.sort();
+                updateSettingsUI();
+            }
+        }
+
+        function removeScheduleTime(time) {
+            settings.schedule_times = settings.schedule_times.filter(t => t !== time);
+            updateSettingsUI();
+        }
+
+        // ==================== TABS ====================
+        function showTab(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('[id^="tab-"]').forEach(t => t.classList.add('hidden'));
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            
+            // Show selected tab
+            document.getElementById(`tab-${tabName}`).classList.remove('hidden');
+            event.target.classList.add('active');
+            
+            // Render content
+            if (tabName === 'routes') renderRoutes();
+            if (tabName === 'settings') updateSettingsUI();
+        }
+
+        // ==================== RENDERING ====================
+        function timeAgo(isoString) {
+            const date = new Date(isoString);
+            const now = new Date();
+            const seconds = Math.floor((now - date) / 1000);
+            if (seconds < 60) return 'Just now';
+            if (seconds < 3600) return `${Math.floor(seconds / 60)} min ago`;
+            if (seconds < 86400) return `${Math.floor(seconds / 3600)} hours ago`;
+            return `${Math.floor(seconds / 86400)} days ago`;
+        }
+
+        function updateSchedulerUI() {
+            const toggle1 = document.getElementById('scheduler-toggle');
+            const toggle2 = document.getElementById('settings-scheduler-toggle');
+            const dot = document.getElementById('status-dot');
+            
+            if (settings.scheduler_enabled) {
+                toggle1?.classList.add('active');
+                toggle2?.classList.add('active');
+                dot?.classList.remove('off');
+            } else {
+                toggle1?.classList.remove('active');
+                toggle2?.classList.remove('active');
+                dot?.classList.add('off');
+            }
+        }
+
+        function updateSettingsUI() {
+            updateSchedulerUI();
+            
+            const emailToggle = document.getElementById('email-toggle');
+            if (settings.email_enabled) {
+                emailToggle?.classList.add('active');
+            } else {
+                emailToggle?.classList.remove('active');
+            }
+            
+            // Render schedule times
+            const list = document.getElementById('schedule-times-list');
+            if (list && settings.schedule_times) {
+                list.innerHTML = settings.schedule_times.map(time => `
+                    <div class="schedule-time-tag">
+                        ${time}
+                        <button onclick="removeScheduleTime('${time}')">&times;</button>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function renderRoutes() {
+            const container = document.getElementById('routes-list');
+            if (!container) return;
+
+            if (!routes.length) {
+                container.innerHTML = '<p style="color: var(--text-secondary); text-align: center; padding: 2rem;">No routes configured. Add a route to get started.</p>';
+                return;
+            }
+
+            container.innerHTML = routes.map(route => `
+                <div class="route-manage-item ${route.enabled ? '' : 'disabled'}">
+                    <div class="toggle ${route.enabled ? 'active' : ''}" onclick="toggleRoute('${route.id}')"></div>
+                    <div class="route-manage-info">
+                        <h4>${route.name}</h4>
+                        <p>${route.origin_name || 'Origin'} → ${route.destination_name || 'Destination'}</p>
+                    </div>
+                    <div class="route-actions">
+                        <button class="btn btn-secondary btn-sm" onclick="editRoute('${route.id}')">Edit</button>
+                        <button class="btn btn-danger btn-sm" onclick="deleteRoute('${route.id}')">Delete</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderDashboard() {
+            const main = document.getElementById('tab-dashboard');
+            const statusText = document.getElementById('status-text');
+
+            if (!latestData || !latestData.routes || latestData.routes.length === 0) {
+                main.innerHTML = `
+                    <div class="error-state">
+                        <h2>No Data Available</h2>
+                        <p>Click "Analyze Now" to run your first traffic analysis.</p>
+                    </div>
+                `;
+                statusText.textContent = 'No data';
+                return;
+            }
+
+            const routeResults = latestData.routes;
+            const best = routeResults[0];
+            const timeParts = best.duration_text.match(/(\d+)/);
+            const timeNum = timeParts ? timeParts[1] : '??';
+
+            statusText.textContent = `Updated ${timeAgo(latestData.timestamp)}`;
+
+            let timeSaved = 0;
+            if (routeResults.length > 1) {
+                timeSaved = Math.floor((routeResults[routeResults.length - 1].duration_seconds - best.duration_seconds) / 60);
+            }
+
+            // Route items HTML
+            let routeItemsHtml = routeResults.map((route, index) => {
+                const rankClass = index === 0 ? 'gold' : index === 1 ? 'silver' : 'bronze';
+                const timeClass = index === 0 ? 'fastest' : '';
+                const diff = index > 0 ? `+${Math.floor((route.duration_seconds - best.duration_seconds) / 60)} min` : '';
+                const trafficClass = route.has_traffic_data ? '' : 'estimated';
+                const trafficLabel = route.has_traffic_data ? '🚦 Live' : '⏱️ Est';
+
+                return `
+                    <div class="route-item">
+                        <div class="route-rank ${rankClass}">${index + 1}</div>
+                        <div>
+                            <div class="route-name">${route.name}</div>
+                            <div class="route-distance">${route.distance_text}</div>
+                        </div>
+                        <span class="traffic-indicator ${trafficClass}">${trafficLabel}</span>
+                        <div style="text-align: right;">
+                            <div class="route-time ${timeClass}">${route.duration_text}</div>
+                            ${diff ? `<div class="route-diff">${diff}</div>` : ''}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            // Stats HTML
+            let statsHtml = '';
+            if (stats && stats.total_analyses > 0) {
+                statsHtml = `
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-value">${stats.total_analyses}</div>
+                            <div class="stat-label">Analyses (${stats.days}d)</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">${timeSaved} min</div>
+                            <div class="stat-label">Time Saved</div>
+                        </div>
+                    </div>
+                `;
+
+                if (stats.route_wins) {
+                    statsHtml += '<div class="win-bar-container">';
+                    for (const [routeName, wins] of Object.entries(stats.route_wins)) {
+                        const pct = Math.round((wins / stats.total_analyses) * 100);
+                        const shortName = routeName.includes(':') ? routeName.split(':')[1].trim() : routeName;
+                        statsHtml += `
+                            <div class="win-bar-item">
+                                <div class="win-bar-label">
+                                    <span>${shortName}</span>
+                                    <span>${pct}% wins</span>
+                                </div>
+                                <div class="win-bar">
+                                    <div class="win-bar-fill" style="width: ${pct}%"></div>
+                                </div>
+                            </div>
+                        `;
+                    }
+                    statsHtml += '</div>';
+                }
+            } else {
+                statsHtml = '<p style="color: var(--text-secondary); text-align: center;">Run more analyses to see stats</p>';
+            }
+
+            main.innerHTML = `
+                <div class="dashboard-grid">
+                    <div class="card best-route-card">
+                        <div class="card-header">
+                            <span class="card-title">🏆 Recommended Route</span>
+                            <span class="traffic-indicator ${best.has_traffic_data ? '' : 'estimated'}">
+                                ${best.has_traffic_data ? '🚦 Live Traffic' : '⏱️ Estimated'}
+                            </span>
+                        </div>
+                        <div class="best-route-content">
+                            <div class="best-route-info">
+                                <h2>${best.name}</h2>
+                                <div class="best-route-meta">
+                                    <div class="meta-item"><span>📏</span><span>${best.distance_text}</span></div>
+                                    <div class="meta-item"><span>💾</span><span>Save ${timeSaved} min vs slowest</span></div>
+                                </div>
+                            </div>
+                            <div class="time-display">
+                                <div class="time">${timeNum}</div>
+                                <div class="unit">minutes</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header"><span class="card-title">📊 All Routes</span></div>
+                        <div class="route-list">${routeItemsHtml}</div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header"><span class="card-title">📈 Statistics</span></div>
+                        ${statsHtml}
+                    </div>
+                </div>
+
+                <div class="last-updated">Last analysis: ${new Date(latestData.timestamp).toLocaleString()}</div>
+            `;
+        }
+
+        // ==================== INIT ====================
+        async function loadData() {
+            await Promise.all([fetchLatest(), fetchStats(), fetchRoutes(), fetchSettings()]);
+            renderDashboard();
+            updateSchedulerUI();
+        }
+
+        loadData();
+        setInterval(loadData, 5 * 60 * 1000);
+    </script>
+</body>
+</html>

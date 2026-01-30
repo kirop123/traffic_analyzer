@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  traffic-analyzer:
+    build: .
+    container_name: traffic-analyzer
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+    environment:
+      # Required
+      - GOOGLE_MAPS_API_KEY=${GOOGLE_MAPS_API_KEY}
+      
+      # Email notifications (optional)
+      - EMAIL_SENDER=${EMAIL_SENDER:-}
+      - EMAIL_PASSWORD=${EMAIL_PASSWORD:-}
+      - EMAIL_RECEIVER=${EMAIL_RECEIVER:-}
+      
+      # Scheduling (comma-separated times in 24h format)
+      - SCHEDULE_TIMES=${SCHEDULE_TIMES:-17:00,18:00}
+      
+      # Options
+      - RUN_ON_START=${RUN_ON_START:-false}
+      - FORCE_RUN=${FORCE_RUN:-false}
+      - FLASK_DEBUG=${FLASK_DEBUG:-false}
+      - DATA_DIR=/app/data
+      
+    volumes:
+      # Persist data between container restarts
+      - traffic-data:/app/data
+      - traffic-logs:/app/logs
+    
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+volumes:
+  traffic-data:
+  traffic-logs:

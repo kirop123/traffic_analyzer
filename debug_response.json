@@ -1,0 +1,1076 @@
+{
+  "geocoded_waypoints": [
+    {
+      "geocoder_status": "OK",
+      "place_id": "ChIJs_58zbkQLxgRbXo0aZEjOZM",
+      "types": [
+        "premise",
+        "street_address"
+      ]
+    },
+    {
+      "geocoder_status": "OK",
+      "place_id": "ChIJS3fuK8QQLxgRTwhnzaBfghI",
+      "types": [
+        "premise",
+        "street_address"
+      ]
+    },
+    {
+      "geocoder_status": "OK",
+      "place_id": "ChIJq2b-A8UQLxgRyFDd82pOvP4",
+      "types": [
+        "route"
+      ]
+    },
+    {
+      "geocoder_status": "OK",
+      "place_id": "ChIJW8JVNNsQLxgROd5c-UXQir0",
+      "types": [
+        "clothing_store",
+        "establishment",
+        "point_of_interest",
+        "store"
+      ]
+    },
+    {
+      "geocoder_status": "OK",
+      "place_id": "ChIJe79a4dwQLxgRqqmTrYCMzUU",
+      "types": [
+        "street_address"
+      ]
+    },
+    {
+      "geocoder_status": "OK",
+      "place_id": "ChIJ7bDFv_cRLxgRCyRr_qpxDoQ",
+      "types": [
+        "establishment",
+        "point_of_interest"
+      ]
+    },
+    {
+      "geocoder_status": "OK",
+      "place_id": "ChIJnwlbYN4QLxgRKfSn4tbtiDE",
+      "types": [
+        "establishment",
+        "point_of_interest",
+        "transit_station"
+      ]
+    },
+    {
+      "geocoder_status": "OK",
+      "place_id": "ChIJEUSRXwIRLxgRD5K-buRBPC4",
+      "types": [
+        "establishment",
+        "point_of_interest"
+      ]
+    },
+    {
+      "geocoder_status": "OK",
+      "place_id": "ChIJs4PG8aERLxgRdvKAf-A3hmE",
+      "types": [
+        "establishment",
+        "point_of_interest"
+      ]
+    },
+    {
+      "geocoder_status": "OK",
+      "place_id": "ChIJlT9-5xISLxgR4GcW2LwmSjI",
+      "types": [
+        "establishment",
+        "point_of_interest",
+        "transit_station"
+      ]
+    },
+    {
+      "geocoder_status": "OK",
+      "place_id": "ChIJcbU8f6kTLxgRHntjK6_Zgx8",
+      "types": [
+        "premise",
+        "street_address"
+      ]
+    }
+  ],
+  "routes": [
+    {
+      "bounds": {
+        "northeast": {
+          "lat": -1.2881068,
+          "lng": 36.9185792
+        },
+        "southwest": {
+          "lat": -1.3310946,
+          "lng": 36.8008746
+        }
+      },
+      "copyrights": "Powered by Google, \u00a92026 Google",
+      "legs": [
+        {
+          "distance": {
+            "text": "1.0 km",
+            "value": 1030
+          },
+          "duration": {
+            "text": "2 mins",
+            "value": 141
+          },
+          "end_address": "Integrity Center, Nairobi, Kenya",
+          "end_location": {
+            "lat": -1.2895174,
+            "lng": 36.8096711
+          },
+          "start_address": "Adak House, Milimani Rd, Nairobi, Kenya",
+          "start_location": {
+            "lat": -1.2881068,
+            "lng": 36.8008746
+          },
+          "steps": [
+            {
+              "distance": {
+                "text": "1.0 km",
+                "value": 1030
+              },
+              "duration": {
+                "text": "2 mins",
+                "value": 141
+              },
+              "end_location": {
+                "lat": -1.2895174,
+                "lng": 36.8096711
+              },
+              "html_instructions": "Head <b>southeast</b> on <b>Milimani Rd</b> toward <b>Ralph Bunche Rd</b><div style=\"font-size:0.9em\">Pass by Milimani Executive Apartments (on the left)</div><div style=\"font-size:0.9em\">Destination will be on the left</div>",
+              "polyline": {
+                "points": "tqzFmtr_Fd@YlAs@VMLMHIDIBM@C@GBMFa@Dg@Dm@B]JwC@a@B]@i@@K@sA@s@@g@@_@?CBaC?MBuA@W@s@@S?_@?e@?M?_@?a@DgB@k@@[Bc@@a@FcA?K@a@@c@@e@@a@?Q"
+              },
+              "start_location": {
+                "lat": -1.2881068,
+                "lng": 36.8008746
+              },
+              "travel_mode": "DRIVING"
+            }
+          ],
+          "traffic_speed_entry": [],
+          "via_waypoint": []
+        },
+        {
+          "distance": {
+            "text": "0.3 km",
+            "value": 300
+          },
+          "duration": {
+            "text": "1 min",
+            "value": 57
+          },
+          "end_address": "Kenyatta Ave, Nairobi, Kenya",
+          "end_location": {
+            "lat": -1.2892697,
+            "lng": 36.81195700000001
+          },
+          "start_address": "Integrity Center, Nairobi, Kenya",
+          "start_location": {
+            "lat": -1.2895174,
+            "lng": 36.8096711
+          },
+          "steps": [
+            {
+              "distance": {
+                "text": "55 m",
+                "value": 55
+              },
+              "duration": {
+                "text": "1 min",
+                "value": 7
+              },
+              "end_location": {
+                "lat": -1.2895269,
+                "lng": 36.8101597
+              },
+              "html_instructions": "Head <b>east</b> on <b>Milimani Rd</b> toward <b>Kenyatta Ave</b>/<wbr/><b>Valley Rd</b>",
+              "polyline": {
+                "points": "nzzFmkt_FAo@?U@Q@I"
+              },
+              "start_location": {
+                "lat": -1.2895174,
+                "lng": 36.8096711
+              },
+              "travel_mode": "DRIVING"
+            },
+            {
+              "distance": {
+                "text": "0.2 km",
+                "value": 215
+              },
+              "duration": {
+                "text": "1 min",
+                "value": 30
+              },
+              "end_location": {
+                "lat": -1.2891169,
+                "lng": 36.8120393
+              },
+              "html_instructions": "Merge onto <b>Kenyatta Ave</b><div style=\"font-size:0.9em\">Pass by Integrity Centre/<wbr/>Panafric (on the left)</div>",
+              "maneuver": "merge",
+              "polyline": {
+                "points": "pzzFont_FAAGSQwAMiB?CGq@Kw@Sq@"
+              },
+              "start_location": {
+                "lat": -1.2895269,
+                "lng": 36.8101597
+              },
+              "travel_mode": "DRIVING"
+            },
+            {
+              "distance": {
+                "text": "30 m",
+                "value": 30
+              },
+              "duration": {
+                "text": "1 min",
+                "value": 20
+              },
+              "end_location": {
+                "lat": -1.2892697,
+                "lng": 36.81195700000001
+              },
+              "html_instructions": "Make a <b>U-turn</b> at <b>State House Avenue</b>",
+              "maneuver": "uturn-right",
+              "polyline": {
+                "points": "~wzFgzt_FNML\\"
+              },
+              "start_location": {
+                "lat": -1.2891169,
+                "lng": 36.8120393
+              },
+              "travel_mode": "DRIVING"
+            }
+          ],
+          "traffic_speed_entry": [],
+          "via_waypoint": []
+        },
+        {
+          "distance": {
+            "text": "0.3 km",
+            "value": 346
+          },
+          "duration": {
+            "text": "1 min",
+            "value": 46
+          },
+          "end_address": "PR57+VQF, Nairobi, Kenya",
+          "end_location": {
+            "lat": -1.2902622,
+            "lng": 36.8143439
+          },
+          "start_address": "Kenyatta Ave, Nairobi, Kenya",
+          "start_location": {
+            "lat": -1.2892697,
+            "lng": 36.81195700000001
+          },
+          "steps": [
+            {
+              "distance": {
+                "text": "16 m",
+                "value": 16
+              },
+              "duration": {
+                "text": "1 min",
+                "value": 2
+              },
+              "end_location": {
+                "lat": -1.2893291,
+                "lng": 36.8118284
+              },
+              "html_instructions": "Head <b>southwest</b> on <b>Kenyatta Ave</b> toward <b>Ngong Rd</b>",
+              "polyline": {
+                "points": "|xzFwyt_FJX"
+              },
+              "start_location": {
+                "lat": -1.2892697,
+                "lng": 36.81195700000001
+              },
+              "travel_mode": "DRIVING"
+            },
+            {
+              "distance": {
+                "text": "0.3 km",
+                "value": 303
+              },
+              "duration": {
+                "text": "1 min",
+                "value": 40
+              },
+              "end_location": {
+                "lat": -1.2903314,
+                "lng": 36.8141115
+              },
+              "html_instructions": "Turn <b>left</b> at Inua jamii society onto <b>Ngong Rd</b><div style=\"font-size:0.9em\">Pass by EM &amp; EM Technologies (on the right)</div>",
+              "maneuver": "turn-left",
+              "polyline": {
+                "points": "hyzF}xt_Fd@KFCTM@?DGLUDIFWDa@@c@?I?YA]Ci@?O@S@UBM@GRc@LQJMd@c@"
+              },
+              "start_location": {
+                "lat": -1.2893291,
+                "lng": 36.8118284
+              },
+              "travel_mode": "DRIVING"
+            },
+            {
+              "distance": {
+                "text": "27 m",
+                "value": 27
+              },
+              "duration": {
+                "text": "1 min",
+                "value": 4
+              },
+              "end_location": {
+                "lat": -1.2902622,
+                "lng": 36.8143439
+              },
+              "html_instructions": "Turn <b>left</b> at City Clock onto <b>Cathedral Rd</b><div style=\"font-size:0.9em\">Destination will be on the left</div>",
+              "maneuver": "turn-left",
+              "polyline": {
+                "points": "p_{Fegu_FGSCMAK"
+              },
+              "start_location": {
+                "lat": -1.2903314,
+                "lng": 36.8141115
+              },
+              "travel_mode": "DRIVING"
+            }
+          ],
+          "traffic_speed_entry": [],
+          "via_waypoint": []
+        },
+        {
+          "distance": {
+            "text": "0.4 km",
+            "value": 419
+          },
+          "duration": {
+            "text": "1 min",
+            "value": 57
+          },
+          "end_address": "44031 Cathedral Rd, Nairobi, Kenya",
+          "end_location": {
+            "lat": -1.2931937,
+            "lng": 36.8164748
+          },
+          "start_address": "PR57+VQF, Nairobi, Kenya",
+          "start_location": {
+            "lat": -1.2902622,
+            "lng": 36.8143439
+          },
+          "steps": [
+            {
+              "distance": {
+                "text": "0.4 km",
+                "value": 419
+              },
+              "duration": {
+                "text": "1 min",
+                "value": 57
+              },
+              "end_location": {
+                "lat": -1.2931937,
+                "lng": 36.8164748
+              },
+              "html_instructions": "Head <b>east</b> on <b>Cathedral Rd</b><div style=\"font-size:0.9em\">Pass by Waenock Fashion Designer (on the right)</div><div style=\"font-size:0.9em\">Destination will be on the left</div>",
+              "polyline": {
+                "points": "b_{Fshu_F?A@MDIHWLWJMNOTQVOXOXIXKFCTIHCNGNIVODAZQ@A\\SDADENMf@YTIPILETIJCj@MNGBA@ADCDGBG?I@A?I"
+              },
+              "start_location": {
+                "lat": -1.2902622,
+                "lng": 36.8143439
+              },
+              "travel_mode": "DRIVING"
+            }
+          ],
+          "traffic_speed_entry": [],
+          "via_waypoint": []
+        },
+        {
+          "distance": {
+            "text": "0.4 km",
+            "value": 414
+          },
+          "duration": {
+            "text": "1 min",
+            "value": 62
+          },
+          "end_address": "PR4C+W4G, Nairobi, Kenya",
+          "end_location": {
+            "lat": -1.2927595,
+            "lng": 36.8199999
+          },
+          "start_address": "44031 Cathedral Rd, Nairobi, Kenya",
+          "start_location": {
+            "lat": -1.2931937,
+            "lng": 36.8164748
+          },
+          "steps": [
+            {
+              "distance": {
+                "text": "0.1 km",
+                "value": 126
+              },
+              "duration": {
+                "text": "1 min",
+                "value": 23
+              },
+              "end_location": {
+                "lat": -1.2933262,
+                "lng": 36.8174716
+              },
+              "html_instructions": "Head <b>east</b> on <b>Cathedral Rd</b> toward <b>Processional Way</b>",
+              "polyline": {
+                "points": "lq{F}uu_F@O@I@A@A@AFANIBCBA?C@A?A?AAEAOCQCWEWCSCQ@C?A?A@A@ABA"
+              },
+              "start_location": {
+                "lat": -1.2931937,
+                "lng": 36.8164748
+              },
+              "travel_mode": "DRIVING"
+            },
+            {
+              "distance": {
+                "text": "0.3 km",
+                "value": 288
+              },
+              "duration": {
+                "text": "1 min",
+                "value": 39
+              },
+              "end_location": {
+                "lat": -1.2927595,
+                "lng": 36.8199999
+              },
+              "html_instructions": "Merge onto <b>Haile Selassie Ave</b><div style=\"font-size:0.9em\">Pass by Rydek Consults (on the right)</div><div style=\"font-size:0.9em\">Destination will be on the left</div>",
+              "maneuver": "merge",
+              "polyline": {
+                "points": "hr{Fe|u_FIq@OmAGk@Ge@Gc@C]G]CSEQEWGc@Im@Ga@GQAC"
+              },
+              "start_location": {
+                "lat": -1.2933262,
+                "lng": 36.8174716
+              },
+              "travel_mode": "DRIVING"
+            }
+          ],
+          "traffic_speed_entry": [],
+          "via_waypoint": []
+        },
+        {
+          "distance": {
+            "text": "0.2 km",
+            "value": 160
+          },
+          "duration": {
+            "text": "1 min",
+            "value": 40
+          },
+          "end_address": "Shell Haile Selassie Junction, Nairobi, Kenya",
+          "end_location": {
+            "lat": -1.2932998,
+            "lng": 36.820837
+          },
+          "start_address": "PR4C+W4G, Nairobi, Kenya",
+          "start_location": {
+            "lat": -1.2927595,
+            "lng": 36.8199999
+          },
+          "steps": [
+            {
+              "distance": {
+                "text": "27 m",
+                "value": 27
+              },
+              "duration": {
+                "text": "1 min",
+                "value": 5
+              },
+              "end_location": {
+                "lat": -1.2926625,
+                "lng": 36.8202221
+              },
+              "html_instructions": "Head <b>northeast</b> on <b>Haile Selassie Ave</b>",
+              "polyline": {
+                "points": "vn{F_lv_FEGEICICO"
+              },
+              "start_location": {
+                "lat": -1.2927595,
+                "lng": 36.8199999
+              },
+              "travel_mode": "DRIVING"
+            },
+            {
+              "distance": {
+                "text": "0.1 km",
+                "value": 133
+              },
+              "duration": {
+                "text": "1 min",
+                "value": 35
+              },
+              "end_location": {
+                "lat": -1.2932998,
+                "lng": 36.820837
+              },
+              "html_instructions": "At the roundabout, take the <b>3rd</b> exit onto <b>Uhuru Hwy</b>/<wbr/><b>A104</b><div style=\"font-size:0.9em\">Pass by Psalmsdema Investments(Kasolo) (on the right)</div>",
+              "maneuver": "roundabout-left",
+              "polyline": {
+                "points": "bn{Fkmv_FAAA?AAA?AACCCEAEAGAE?G@C?A@A?C@A@A@ABA@A@ABA@?BA@?BA@?B?D?@?FB@?@@@@JMJGJEPIb@S"
+              },
+              "start_location": {
+                "lat": -1.2926625,
+                "lng": 36.8202221
+              },
+              "travel_mode": "DRIVING"
+            }
+          ],
+          "traffic_speed_entry": [],
+          "via_waypoint": []
+        },
+        {
+          "distance": {
+            "text": "1.4 km",
+            "value": 1417
+          },
+          "duration": {
+            "text": "2 mins",
+            "value": 144
+          },
+          "end_address": "Nyayo Stadium, Nairobi, Kenya",
+          "end_location": {
+            "lat": -1.304594,
+            "lng": 36.8264859
+          },
+          "start_address": "Shell Haile Selassie Junction, Nairobi, Kenya",
+          "start_location": {
+            "lat": -1.2932998,
+            "lng": 36.820837
+          },
+          "steps": [
+            {
+              "distance": {
+                "text": "0.8 km",
+                "value": 804
+              },
+              "duration": {
+                "text": "1 min",
+                "value": 74
+              },
+              "end_location": {
+                "lat": -1.299647,
+                "lng": 36.8242375
+              },
+              "html_instructions": "Head <b>southeast</b> on <b>Uhuru Hwy</b>/<wbr/><b>A104</b>",
+              "polyline": {
+                "points": "br{Fgqv_FPIFCPILG^QNG\\QJERKLGNI\\S^Q\\S\\S\\STKRKZO^Q^Q\\Q^QNILG^S\\Q^Q\\QFCVM\\Q^Q^Q\\Q^Or@_@b@U~@a@dFgA"
+              },
+              "start_location": {
+                "lat": -1.2932998,
+                "lng": 36.820837
+              },
+              "travel_mode": "DRIVING"
+            },
+            {
+              "distance": {
+                "text": "0.6 km",
+                "value": 613
+              },
+              "duration": {
+                "text": "1 min",
+                "value": 70
+              },
+              "end_location": {
+                "lat": -1.304594,
+                "lng": 36.8264859
+              },
+              "html_instructions": "At the roundabout, take the <b>2nd</b> exit and stay on <b>Uhuru Hwy</b>/<wbr/><b>A104</b><div style=\"font-size:0.9em\">Pass by Nyayo Sports Complex (on the right in 450m)</div>",
+              "maneuver": "roundabout-left",
+              "polyline": {
+                "points": "xy|Fofw_F@E@EBC@CBCBCBADABADAB?DAB@B?B?D@D?V@D?FAjEsAj@SJEvEeBrBw@zDwALG|@_@LIFI"
+              },
+              "start_location": {
+                "lat": -1.299647,
+                "lng": 36.8242375
+              },
+              "travel_mode": "DRIVING"
+            }
+          ],
+          "traffic_speed_entry": [],
+          "via_waypoint": []
+        },
+        {
+          "distance": {
+            "text": "2.1 km",
+            "value": 2141
+          },
+          "duration": {
+            "text": "3 mins",
+            "value": 162
+          },
+          "end_address": "Kapiti road, off Mombasa Road, Nairobi, Kenya",
+          "end_location": {
+            "lat": -1.3191423,
+            "lng": 36.837832
+          },
+          "start_address": "Nyayo Stadium, Nairobi, Kenya",
+          "start_location": {
+            "lat": -1.304594,
+            "lng": 36.8264859
+          },
+          "steps": [
+            {
+              "distance": {
+                "text": "9 m",
+                "value": 9
+              },
+              "duration": {
+                "text": "1 min",
+                "value": 1
+              },
+              "end_location": {
+                "lat": -1.3046354,
+                "lng": 36.826555
+              },
+              "html_instructions": "Head <b>southeast</b> on <b>Uhuru Hwy</b>/<wbr/><b>A104</b>",
+              "polyline": {
+                "points": "tx}Fqtw_FHM"
+              },
+              "start_location": {
+                "lat": -1.304594,
+                "lng": 36.8264859
+              },
+              "travel_mode": "DRIVING"
+            },
+            {
+              "distance": {
+                "text": "2.1 km",
+                "value": 2132
+              },
+              "duration": {
+                "text": "3 mins",
+                "value": 161
+              },
+              "end_location": {
+                "lat": -1.3191423,
+                "lng": 36.837832
+              },
+              "html_instructions": "At the roundabout, take the <b>2nd</b> exit onto <b>Mombasa Road</b>/<wbr/><b>A104</b><div style=\"font-size:0.9em\">Pass by Kenya Institute Of Mass Communication (on the left in 750m)</div>",
+              "maneuver": "roundabout-left",
+              "polyline": {
+                "points": "~x}F_uw_F?A?A@C?A@A?C@A@ABEDEBCDCDAFADAD?D?F?D@B@D@DBBBDBdBo@NGl@U\\MPGfDqAzGaCbAa@xAi@zBw@n@UJG|Ai@vEeBdDoAf@SVI|Ak@`A_@`@Sb@U`@Wr@i@jBsAp@k@rAkA`AkAZ]r@mAbAiBpA{CNW?Ap@mAhBoDLUDIJS@C`EgI"
+              },
+              "start_location": {
+                "lat": -1.3046354,
+                "lng": 36.826555
+              },
+              "travel_mode": "DRIVING"
+            }
+          ],
+          "traffic_speed_entry": [],
+          "via_waypoint": []
+        },
+        {
+          "distance": {
+            "text": "6.0 km",
+            "value": 6007
+          },
+          "duration": {
+            "text": "7 mins",
+            "value": 439
+          },
+          "end_address": "Cabanas, Nairobi, Kenya",
+          "end_location": {
+            "lat": -1.3307662,
+            "lng": 36.8878498
+          },
+          "start_address": "Kapiti road, off Mombasa Road, Nairobi, Kenya",
+          "start_location": {
+            "lat": -1.3191423,
+            "lng": 36.837832
+          },
+          "steps": [
+            {
+              "distance": {
+                "text": "1.3 km",
+                "value": 1258
+              },
+              "duration": {
+                "text": "2 mins",
+                "value": 90
+              },
+              "end_location": {
+                "lat": -1.3248503,
+                "lng": 36.8475648
+              },
+              "html_instructions": "Head <b>southeast</b> on <b>Mombasa Road</b>/<wbr/><b>A104</b> toward <b>Kapiti Rd</b><div style=\"font-size:0.9em\">Continue to follow A104</div>",
+              "polyline": {
+                "points": "rs`Gm{y_FFKLWVi@hCgFXi@v@}ATi@f@iAl@uAf@kAf@eAh@mAf@gA\\u@JW^iAh@wAPa@@AR_@@AP]x@{A?AXi@Xe@POROVUBELULWNULU@AJS@CN[N]P_@P]P_@|A_D"
+              },
+              "start_location": {
+                "lat": -1.3191423,
+                "lng": 36.837832
+              },
+              "travel_mode": "DRIVING"
+            },
+            {
+              "distance": {
+                "text": "0.4 km",
+                "value": 359
+              },
+              "duration": {
+                "text": "1 min",
+                "value": 27
+              },
+              "end_location": {
+                "lat": -1.3264014,
+                "lng": 36.85038979999999
+              },
+              "html_instructions": "Continue straight onto <b>Mombasa Road</b>/<wbr/><b>A104</b>",
+              "maneuver": "straight",
+              "polyline": {
+                "points": "hwaGgx{_FfC_FN_@N_@HSb@gAP]R_@HSn@gB"
+              },
+              "start_location": {
+                "lat": -1.3248503,
+                "lng": 36.8475648
+              },
+              "travel_mode": "DRIVING"
+            },
+            {
+              "distance": {
+                "text": "4.2 km",
+                "value": 4216
+              },
+              "duration": {
+                "text": "5 mins",
+                "value": 309
+              },
+              "end_location": {
+                "lat": -1.3299666,
+                "lng": 36.8865039
+              },
+              "html_instructions": "Keep <b>left</b> to stay on <b>Mombasa Road</b>/<wbr/><b>A104</b><div style=\"font-size:0.9em\">Pass by Liberty Plaza (on the right in 3.6 km)</div>",
+              "maneuver": "keep-left",
+              "polyline": {
+                "points": "~`bG}i|_FVs@Vq@Ps@Xo@P[P]fAkAlAeCjAsBxB{Dl@mA~@mBb@}@l@kAFOj@kAr@aBFQTk@j@kB`@gBDYH]Lw@BQFs@Fq@Bm@@c@@e@?w@?aAAi@AYAi@AMAYAe@Ei@Gc@M}AKwAGoAGo@Ek@C]Es@IiAGu@K}AE{@ACCa@AGWoDI{@MeBImAEo@C[UyDE_AGaAGy@Ei@AIKoA?CC]GgAKaBg@qGUwCAQQkCEo@Go@IuAKeAIiAGeAAEOeBEs@GcACUGu@KgAC_@AKU_EIy@AKCS?CAKE_@Ee@Ak@Aq@AgAC}@@y@@[@cA?k@?eA@i@F{@Bm@\\sAb@w@lByDb@y@^y@JUJUL[PY"
+              },
+              "start_location": {
+                "lat": -1.3264014,
+                "lng": 36.85038979999999
+              },
+              "travel_mode": "DRIVING"
+            },
+            {
+              "distance": {
+                "text": "0.2 km",
+                "value": 174
+              },
+              "duration": {
+                "text": "1 min",
+                "value": 13
+              },
+              "end_location": {
+                "lat": -1.3307662,
+                "lng": 36.8878498
+              },
+              "html_instructions": "Keep <b>left</b>",
+              "maneuver": "keep-left",
+              "polyline": {
+                "points": "hwbGskc`FPk@NWNSPWj@kAR]DMJQHS"
+              },
+              "start_location": {
+                "lat": -1.3299666,
+                "lng": 36.8865039
+              },
+              "travel_mode": "DRIVING"
+            }
+          ],
+          "traffic_speed_entry": [],
+          "via_waypoint": []
+        },
+        {
+          "distance": {
+            "text": "6.2 km",
+            "value": 6240
+          },
+          "duration": {
+            "text": "15 mins",
+            "value": 887
+          },
+          "end_address": "MWV5+W9C, Nairobi, Kenya",
+          "end_location": {
+            "lat": -1.3050141,
+            "lng": 36.9083439
+          },
+          "start_address": "Cabanas, Nairobi, Kenya",
+          "start_location": {
+            "lat": -1.3307662,
+            "lng": 36.8878498
+          },
+          "steps": [
+            {
+              "distance": {
+                "text": "0.2 km",
+                "value": 212
+              },
+              "duration": {
+                "text": "1 min",
+                "value": 16
+              },
+              "end_location": {
+                "lat": -1.3305161,
+                "lng": 36.8896464
+              },
+              "html_instructions": "Head <b>southeast</b>",
+              "polyline": {
+                "points": "h|bGatc`F@C@GDKH]DW?A@MB[A[?A?KCS?CAMCOACEMGS?CMYg@iA"
+              },
+              "start_location": {
+                "lat": -1.3307662,
+                "lng": 36.8878498
+              },
+              "travel_mode": "DRIVING"
+            },
+            {
+              "distance": {
+                "text": "3.6 km",
+                "value": 3622
+              },
+              "duration": {
+                "text": "4 mins",
+                "value": 258
+              },
+              "end_location": {
+                "lat": -1.3176643,
+                "lng": 36.9185792
+              },
+              "html_instructions": "Continue onto <b>Airport N Rd</b><div style=\"font-size:0.9em\">Pass by Amiran Kenya Ltd (on the right in 1.1 km)</div>",
+              "polyline": {
+                "points": "vzbGi_d`FCEeCuD]i@_CmDyBqDc@u@qBkD_AeB}@gBCCOYkA{BmA}ByAoCmAaCiAwBqBuDS_@Q]e@}@]m@Q_@OYCCQ]S]c@}@AAe@{@Q_@KQoAaCk@gAOWcAqB{AqC[m@S_@w@yACEgAuB]o@m@iAy@_Bo@mAEIk@kAIQCEWi@O_@EOEKe@uA]sAYmAOq@AMC[Aa@?AAc@Aa@?ACc@?W?I?c@?A?Y@G@c@?C@S?KBc@?A@a@@S@OBc@Bc@Bc@Bc@@M@U@_@?A?S@E?K@EBU?G@IBWBY@I@K@W?IBc@@a@?Q@Q@a@?A?c@?SAOAc@A]?ECc@?QEs@Ee@AIEc@CKAKG_@Ic@Ic@GUEWOo@?CQq@g@}AYs@]w@Sc@"
+              },
+              "start_location": {
+                "lat": -1.3305161,
+                "lng": 36.8896464
+              },
+              "travel_mode": "DRIVING"
+            },
+            {
+              "distance": {
+                "text": "0.4 km",
+                "value": 381
+              },
+              "duration": {
+                "text": "2 mins",
+                "value": 95
+              },
+              "end_location": {
+                "lat": -1.314879,
+                "lng": 36.9165904
+              },
+              "html_instructions": "Turn <b>left</b> onto <b>Embakasi Rd</b>",
+              "maneuver": "turn-left",
+              "polyline": {
+                "points": "jj`Gcti`Fa@Xo@`@m@`@eAp@gBlAGBkDzBiAn@"
+              },
+              "start_location": {
+                "lat": -1.3176643,
+                "lng": 36.9185792
+              },
+              "travel_mode": "DRIVING"
+            },
+            {
+              "distance": {
+                "text": "0.7 km",
+                "value": 710
+              },
+              "duration": {
+                "text": "2 mins",
+                "value": 149
+              },
+              "end_location": {
+                "lat": -1.3097231,
+                "lng": 36.9128229
+              },
+              "html_instructions": "Continue onto <b>Rd to Utawala Academy</b>",
+              "polyline": {
+                "points": "~x_Gugi`FMHgAr@QLm@^[TC@g@Zq@b@w@j@IDm@d@a@TWPi@Z]RQLIF]REDUNIDSNCBWPED[RWPEBCBWN]TEB]R]RCBe@Z[Ty@h@[T]T"
+              },
+              "start_location": {
+                "lat": -1.314879,
+                "lng": 36.9165904
+              },
+              "travel_mode": "DRIVING"
+            },
+            {
+              "distance": {
+                "text": "0.5 km",
+                "value": 481
+              },
+              "duration": {
+                "text": "2 mins",
+                "value": 130
+              },
+              "end_location": {
+                "lat": -1.3085092,
+                "lng": 36.9095198
+              },
+              "html_instructions": "At the roundabout, continue straight onto <b>Embakasi Rd</b>",
+              "maneuver": "roundabout-left",
+              "polyline": {
+                "points": "vx~Fcph`F@??@?@@@?@?@?@?@?@?@?@?@?@A??@?@A@A@?@A?A@A@G@C@C?EACACACCAAOH[T]RQLUNGDMLKJIJIL?@GH_@p@ABQZEFQ\\QXABQ^OZA@GLAD?B?D?B?B@F@FDJ@@BFJVP\\BHLTN^P^BFJVDF"
+              },
+              "start_location": {
+                "lat": -1.3097231,
+                "lng": 36.9128229
+              },
+              "travel_mode": "DRIVING"
+            },
+            {
+              "distance": {
+                "text": "0.5 km",
+                "value": 465
+              },
+              "duration": {
+                "text": "2 mins",
+                "value": 122
+              },
+              "end_location": {
+                "lat": -1.3047678,
+                "lng": 36.9076533
+              },
+              "html_instructions": "Turn <b>right</b> onto <b>Jabali Avenue</b><div style=\"font-size:0.9em\">Restricted usage road</div>",
+              "maneuver": "turn-right",
+              "polyline": {
+                "points": "dq~Fo{g`FaA`@i@RoDzAeA`@iG`C_C~@"
+              },
+              "start_location": {
+                "lat": -1.3085092,
+                "lng": 36.9095198
+              },
+              "travel_mode": "DRIVING"
+            },
+            {
+              "distance": {
+                "text": "0.2 km",
+                "value": 161
+              },
+              "duration": {
+                "text": "1 min",
+                "value": 38
+              },
+              "end_location": {
+                "lat": -1.3042003,
+                "lng": 36.90897
+              },
+              "html_instructions": "Turn <b>right</b> onto <b>Eldoret Dr</b><div style=\"font-size:0.9em\">Restricted usage road</div>",
+              "maneuver": "turn-right",
+              "polyline": {
+                "points": "xy}Fyog`Fe@kAk@qACKCGCECGIWEKAI?K@M"
+              },
+              "start_location": {
+                "lat": -1.3047678,
+                "lng": 36.9076533
+              },
+              "travel_mode": "DRIVING"
+            },
+            {
+              "distance": {
+                "text": "84 m",
+                "value": 84
+              },
+              "duration": {
+                "text": "1 min",
+                "value": 28
+              },
+              "end_location": {
+                "lat": -1.3049066,
+                "lng": 36.9092016
+              },
+              "html_instructions": "Turn <b>right</b><div style=\"font-size:0.9em\">Restricted usage road</div>",
+              "maneuver": "turn-right",
+              "polyline": {
+                "points": "fv}Faxg`F^?F?D?DAJCf@Ud@Q"
+              },
+              "start_location": {
+                "lat": -1.3042003,
+                "lng": 36.90897
+              },
+              "travel_mode": "DRIVING"
+            },
+            {
+              "distance": {
+                "text": "91 m",
+                "value": 91
+              },
+              "duration": {
+                "text": "1 min",
+                "value": 40
+              },
+              "end_location": {
+                "lat": -1.3052809,
+                "lng": 36.9084781
+              },
+              "html_instructions": "Turn <b>right</b><div style=\"font-size:0.9em\">Restricted usage road</div>",
+              "maneuver": "turn-right",
+              "polyline": {
+                "points": "tz}Foyg`Fj@tA\\x@"
+              },
+              "start_location": {
+                "lat": -1.3049066,
+                "lng": 36.9092016
+              },
+              "travel_mode": "DRIVING"
+            },
+            {
+              "distance": {
+                "text": "33 m",
+                "value": 33
+              },
+              "duration": {
+                "text": "1 min",
+                "value": 11
+              },
+              "end_location": {
+                "lat": -1.3050141,
+                "lng": 36.9083439
+              },
+              "html_instructions": "Turn <b>right</b><div style=\"font-size:0.9em\">Restricted usage road</div><div style=\"font-size:0.9em\">Destination will be on the right</div>",
+              "maneuver": "turn-right",
+              "polyline": {
+                "points": "~|}F_ug`Fu@Z"
+              },
+              "start_location": {
+                "lat": -1.3052809,
+                "lng": 36.9084781
+              },
+              "travel_mode": "DRIVING"
+            }
+          ],
+          "traffic_speed_entry": [],
+          "via_waypoint": []
+        }
+      ],
+      "overview_polyline": {
+        "points": "tqzFmtr_FrBmAd@[NSDQR_BTcFHuBFoELiJ?uBLsEJsCD}BAeAB[IU_@aESmBSq@NMXv@l@OVMR]La@FeA?c@EgA@c@Dc@Tk@X_@d@c@GSEY@ONa@Xe@d@a@p@_@pAc@`Ae@`Ai@bAo@jAc@jA[FEHOBe@DM\\QDIY_CBIDCY_C[sCW{AQqAOs@Q_@EQCAKKE[BKRMJCRBB@LKlAk@rCqAhE_CrEyBfEuB|BeAvAu@~@a@dFgABKDGPKREPBj@?vFgBbFkBnHoCjAg@TSHOBIFMTOXCVDHFDBdBo@|@]n@UbMsE|CkAtG_C|LsE~CkAdAi@tAaA|C_CrAkA`AkAZ]r@mAbAiBpA{CNYnD}GvEkJhEsIlAgCtA_D`DgHh@mAhAaDh@eAdBeDXe@POj@e@n@iAnAiCb@}@dF_KlA{Cd@}@x@{Bn@eBPs@Xo@b@y@fAkAlAeCdEoHlB{DdCeFz@sB`AwCf@aCVuAJeAJ_BBcEG{BC_AMmAi@uHu@{Kg@uGa@_Gk@uJSgCKeBs@sJo@eJgA{N_@wEe@eHGo@KeAC}AEeCBuAB_FJiB\\sAb@w@pCsF^y@v@aBPk@NW`@k@pAiCRk@PeA@eAIu@Oi@u@cBiC{D}CwE}CgFqDqGaAkBcGcLeKyR_O{X_IgOqAmCaAqCiAaFGcBE_B?iAJwCVwEB{@Do@JeAFqADgBAiAGkBMuBS{Aa@uBOs@y@oCw@kBSc@a@X}AbAmD~BsD~BwAx@cDvBuClBqBrAcBdAyBzAwCjBcBhAqBtA@LAJGHMDQEEEk@^mAv@c@d@q@jAaB~CKX@T|@rBd@fAP^kBt@uF|BiK`EyAqDWq@AU@M^?L?PElAg@hAnCu@Z"
+      },
+      "summary": "Milimani Rd",
+      "warnings": [],
+      "waypoint_order": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ]
+    }
+  ],
+  "status": "OK"
+}
