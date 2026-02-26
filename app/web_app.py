@@ -12,6 +12,7 @@ from apscheduler.triggers.cron import CronTrigger
 from traffic_analyzer import get_analyzer
 from email_service import get_email_service
 from data_store import get_data_store
+from traffic_analyzer import RouteConfig
 
 # Setup logging
 logging.basicConfig(
@@ -35,8 +36,18 @@ def run_analysis(send_email: bool = True):
     
     try:
         store = get_data_store()
-        routes = store.get_routes()
+        route_dicts = store.get_routes()
         settings = store.get_settings()
+        
+        routes = [
+            RouteConfig(
+                name=r['name'],
+                origin=r['origin'],
+                destination=r['destination'],
+                waypoints=r.get('waypoints', '')
+            )
+            for r in route_dicts if r.get('enabled', True)
+        ]
         
         analyzer = get_analyzer()
         results = analyzer.analyze_all(routes)

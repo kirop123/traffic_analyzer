@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nairobi Traffic Analyzer</title>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <style>
         :root {
             --bg-primary: #0a0a0f;
@@ -720,6 +722,122 @@
         }
 
         .hidden { display: none !important; }
+
+        /* Map Modal */
+        .map-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.85);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            padding: 1rem;
+        }
+
+        .map-modal {
+            background: var(--bg-card);
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            width: 95%;
+            max-width: 1100px;
+            height: 80vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .map-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            flex-shrink: 0;
+        }
+
+        .map-modal-header h3 {
+            font-size: 1.1rem;
+        }
+
+        .map-modal-body {
+            display: flex;
+            flex: 1;
+            min-height: 0;
+        }
+
+        #route-map {
+            flex: 1;
+            min-height: 300px;
+            height: 100%;
+            width: 100%;
+        }
+
+        .map-sidebar {
+            width: 260px;
+            background: var(--bg-secondary);
+            padding: 1rem;
+            overflow-y: auto;
+            border-left: 1px solid var(--border-color);
+            flex-shrink: 0;
+        }
+
+        @media (max-width: 768px) {
+            .map-modal-body {
+                flex-direction: column;
+            }
+            .map-sidebar {
+                width: 100%;
+                max-height: 180px;
+                border-left: none;
+                border-top: 1px solid var(--border-color);
+            }
+        }
+
+        .map-route-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            width: 100%;
+            padding: 0.75rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            cursor: pointer;
+            margin-bottom: 0.5rem;
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+        }
+
+        .map-route-btn:hover {
+            border-color: var(--accent-green);
+        }
+
+        .map-route-btn.active {
+            border-color: var(--accent-green);
+            background: rgba(0, 255, 135, 0.1);
+        }
+
+        .map-route-color {
+            width: 14px;
+            height: 14px;
+            border-radius: 3px;
+            flex-shrink: 0;
+        }
+
+        .map-route-time {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--accent-green);
+            margin-left: auto;
+        }
+
+        .route-item { cursor: pointer; }
     </style>
 </head>
 <body>
@@ -816,6 +934,20 @@
                 </div>
 
                 <button class="btn btn-primary" onclick="saveSettings()">Save Settings</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Map Modal -->
+    <div class="map-modal-overlay hidden" id="map-modal">
+        <div class="map-modal">
+            <div class="map-modal-header">
+                <h3 id="map-modal-title">🗺️ Route Map</h3>
+                <button class="modal-close" onclick="closeMapModal()">&times;</button>
+            </div>
+            <div class="map-modal-body">
+                <div id="route-map"></div>
+                <div class="map-sidebar" id="map-sidebar"></div>
             </div>
         </div>
     </div>
@@ -1212,7 +1344,7 @@
                 const trafficLabel = route.has_traffic_data ? '🚦 Live' : '⏱️ Est';
 
                 return `
-                    <div class="route-item">
+                    <div class="route-item" onclick="showRouteMap(${index})" title="Click to view on map">
                         <div class="route-rank ${rankClass}">${index + 1}</div>
                         <div>
                             <div class="route-name">${route.name}</div>
@@ -1304,6 +1436,211 @@
                 <div class="last-updated">Last analysis: ${new Date(latestData.timestamp).toLocaleString()}</div>
             `;
         }
+
+        // ==================== MAP ====================
+        let mapInstance = null;
+        let mapLayers = [];
+        const ROUTE_COLORS = ['#00ff87', '#00d4ff', '#ff9f43', '#a855f7', '#ff6b6b'];
+
+        function decodePolyline(encoded) {
+            const points = [];
+            let index = 0, lat = 0, lng = 0;
+            while (index < encoded.length) {
+                let b, shift = 0, result = 0;
+                do {
+                    b = encoded.charCodeAt(index++) - 63;
+                    result |= (b & 0x1f) << shift;
+                    shift += 5;
+                } while (b >= 0x20);
+                lat += (result & 1) ? ~(result >> 1) : (result >> 1);
+                shift = 0; result = 0;
+                do {
+                    b = encoded.charCodeAt(index++) - 63;
+                    result |= (b & 0x1f) << shift;
+                    shift += 5;
+                } while (b >= 0x20);
+                lng += (result & 1) ? ~(result >> 1) : (result >> 1);
+                points.push([lat / 1e5, lng / 1e5]);
+            }
+            return points;
+        }
+
+        function showRouteMap(activeIndex) {
+            if (!latestData || !latestData.routes) return;
+
+            const modal = document.getElementById('map-modal');
+            modal.classList.remove('hidden');
+
+            // Build sidebar
+            const sidebar = document.getElementById('map-sidebar');
+            sidebar.innerHTML = '<div style="font-size:0.8rem;color:var(--text-secondary);margin-bottom:0.75rem;">Click to highlight a route</div>';
+            latestData.routes.forEach((route, i) => {
+                const color = ROUTE_COLORS[i % ROUTE_COLORS.length];
+                const isActive = i === activeIndex;
+                sidebar.innerHTML += `
+                    <button class="map-route-btn ${isActive ? 'active' : ''}" onclick="highlightRoute(${i})">
+                        <span class="map-route-color" style="background:${color}"></span>
+                        <span>${route.name.includes(':') ? route.name.split(':')[1].trim() : route.name}</span>
+                        <span class="map-route-time">${route.duration_text}</span>
+                    </button>`;
+            });
+
+            // Init map after modal is visible
+            setTimeout(() => initMap(activeIndex), 200);
+        }
+
+        function initMap(activeIndex) {
+            const container = document.getElementById('route-map');
+            
+            if (mapInstance) {
+                mapInstance.remove();
+                mapInstance = null;
+            }
+
+            // Default center on Nairobi
+            mapInstance = L.map(container, {
+                zoomControl: true,
+                attributionControl: false,
+                center: [-1.296, 36.85],
+                zoom: 13
+            });
+
+            L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+                maxZoom: 19
+            }).addTo(mapInstance);
+
+            // Force Leaflet to recalculate container size
+            setTimeout(() => {
+                mapInstance.invalidateSize();
+                drawAllRoutes(activeIndex);
+            }, 150);
+        }
+
+        function drawAllRoutes(activeIndex) {
+            // Clear old layers
+            mapLayers.forEach(l => mapInstance.removeLayer(l));
+            mapLayers = [];
+
+            const allBounds = [];
+            const routeResults = latestData.routes;
+
+            // Check if any route has polyline data
+            const hasPolylines = routeResults.some(r => r.overview_polyline);
+            if (!hasPolylines) {
+                L.popup()
+                    .setLatLng([-1.296, 36.85])
+                    .setContent('<b>No route data available.</b><br>Click "Analyze Now" to generate route maps.')
+                    .openOn(mapInstance);
+                return;
+            }
+
+            // Draw inactive routes first (behind)
+            routeResults.forEach((route, i) => {
+                if (i === activeIndex) return;
+                if (!route.overview_polyline) return;
+
+                const coords = decodePolyline(route.overview_polyline);
+                if (!coords.length) return;
+
+                const color = ROUTE_COLORS[i % ROUTE_COLORS.length];
+                const line = L.polyline(coords, {
+                    color: color,
+                    weight: 4,
+                    opacity: 0.3
+                }).addTo(mapInstance);
+                mapLayers.push(line);
+            });
+
+            // Draw active route on top
+            const active = routeResults[activeIndex];
+            if (active && active.overview_polyline) {
+                const coords = decodePolyline(active.overview_polyline);
+                if (coords.length) {
+                    const color = ROUTE_COLORS[activeIndex % ROUTE_COLORS.length];
+
+                    // Glow effect
+                    const glow = L.polyline(coords, {
+                        color: color,
+                        weight: 10,
+                        opacity: 0.25
+                    }).addTo(mapInstance);
+                    mapLayers.push(glow);
+
+                    const line = L.polyline(coords, {
+                        color: color,
+                        weight: 5,
+                        opacity: 0.9
+                    }).addTo(mapInstance);
+                    mapLayers.push(line);
+
+                    allBounds.push(...coords);
+                }
+
+                // Draw waypoint markers for active route
+                if (active.waypoint_coordinates && active.waypoint_coordinates.length) {
+                    const wps = active.waypoint_coordinates;
+                    wps.forEach((wp, wi) => {
+                        let icon;
+                        if (wi === 0) {
+                            icon = L.divIcon({
+                                className: '',
+                                html: '<div style="background:#00ff87;color:#000;font-weight:700;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;border:2px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,0.5);">A</div>',
+                                iconSize: [28, 28],
+                                iconAnchor: [14, 14]
+                            });
+                        } else if (wi === wps.length - 1) {
+                            icon = L.divIcon({
+                                className: '',
+                                html: '<div style="background:#ff6b6b;color:#fff;font-weight:700;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;border:2px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,0.5);">B</div>',
+                                iconSize: [28, 28],
+                                iconAnchor: [14, 14]
+                            });
+                        } else {
+                            icon = L.divIcon({
+                                className: '',
+                                html: `<div style="background:#1a1a24;color:#fff;font-weight:600;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;border:2px solid ${ROUTE_COLORS[activeIndex % ROUTE_COLORS.length]};box-shadow:0 2px 6px rgba(0,0,0,0.4);">${wi}</div>`,
+                                iconSize: [22, 22],
+                                iconAnchor: [11, 11]
+                            });
+                        }
+
+                        const marker = L.marker([wp.lat, wp.lng], { icon })
+                            .bindPopup(`<b>${wp.label}</b>`)
+                            .addTo(mapInstance);
+                        mapLayers.push(marker);
+                        allBounds.push([wp.lat, wp.lng]);
+                    });
+                }
+            }
+
+            if (allBounds.length) {
+                mapInstance.fitBounds(allBounds, { padding: [40, 40] });
+            }
+
+            // Update sidebar active state
+            document.querySelectorAll('.map-route-btn').forEach((btn, i) => {
+                btn.classList.toggle('active', i === activeIndex);
+            });
+        }
+
+        function highlightRoute(index) {
+            if (!mapInstance) return;
+            drawAllRoutes(index);
+        }
+
+        function closeMapModal() {
+            document.getElementById('map-modal').classList.add('hidden');
+            if (mapInstance) {
+                mapInstance.remove();
+                mapInstance = null;
+            }
+            mapLayers = [];
+        }
+
+        // Close map modal on Escape
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeMapModal();
+        });
 
         // ==================== INIT ====================
         async function loadData() {

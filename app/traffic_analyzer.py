@@ -8,7 +8,7 @@ import json
 import os
 import logging
 from datetime import datetime
-from dataclasses import dataclass, asdict
+from dataclasses import dataclass, asdict, field
 from typing import Optional
 from tenacity import retry, stop_after_attempt, wait_exponential, retry_if_exception_type
 
@@ -31,6 +31,8 @@ class RouteResult:
     has_traffic_data: bool
     timestamp: str
     legs: list
+    overview_polyline: str = ""
+    waypoint_coordinates: list = field(default_factory=list)
 
     def to_dict(self):
         return asdict(self)
@@ -118,6 +120,28 @@ class TrafficAnalyzer:
                 "duration": leg.get("duration_in_traffic", leg.get("duration", {})).get("text", "N/A")
             })
         
+        # Extract overview polyline
+        overview_polyline = api_route.get("overview_polyline", {}).get("points", "")
+        
+        # Extract waypoint coordinates from legs
+        waypoint_coords = []
+        waypoint_coords.append({
+            "lat": legs[0]["start_location"]["lat"],
+            "lng": legs[0]["start_location"]["lng"],
+            "label": legs[0].get("start_address", "Origin")
+        })
+        for leg in legs[:-1]:
+            waypoint_coords.append({
+                "lat": leg["end_location"]["lat"],
+                "lng": leg["end_location"]["lng"],
+                "label": leg.get("end_address", "Waypoint")
+            })
+        waypoint_coords.append({
+            "lat": legs[-1]["end_location"]["lat"],
+            "lng": legs[-1]["end_location"]["lng"],
+            "label": legs[-1].get("end_address", "Destination")
+        })
+        
         duration_mins = total_duration // 60
         
         return RouteResult(
@@ -128,7 +152,9 @@ class TrafficAnalyzer:
             distance_text=f"{total_distance / 1000:.1f} km",
             has_traffic_data=has_traffic,
             timestamp=datetime.now().isoformat(),
-            legs=leg_details
+            legs=leg_details,
+            overview_polyline=overview_polyline,
+            waypoint_coordinates=waypoint_coords
         )
     
     def analyze_all(self, routes: list[RouteConfig]) -> list[RouteResult]:
@@ -141,16 +167,16 @@ class TrafficAnalyzer:
             
             if result:
                 results.append(result)
-                icon = "🚦" if result.has_traffic_data else "⏱️"
+                icon = "ðŸš¦" if result.has_traffic_data else "â±ï¸"
                 logger.info(f"  {icon} {result.duration_text} ({result.distance_text})")
             else:
-                logger.warning(f"  ✗ Failed to get data")
+                logger.warning(f"  âœ— Failed to get data")
         
         # Sort by duration
         results.sort(key=lambda x: x.duration_seconds)
         
         if results:
-            logger.info(f"✅ Best route: {results[0].name} ({results[0].duration_text})")
+            logger.info(f"âœ… Best route: {results[0].name} ({results[0].duration_text})")
         
         return results
 
