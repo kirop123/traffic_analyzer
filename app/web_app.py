@@ -4,15 +4,15 @@ Flask web application for Traffic Analyzer Dashboard
 
 import os
 import logging
+import requests as http_requests
 from datetime import datetime
 from flask import Flask, render_template, jsonify, request
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.cron import CronTrigger
 
-from traffic_analyzer import get_analyzer
+from traffic_analyzer import get_analyzer, RouteConfig
 from email_service import get_email_service
 from data_store import get_data_store
-from traffic_analyzer import RouteConfig
 
 # Setup logging
 logging.basicConfig(
@@ -307,6 +307,145 @@ def api_toggle_scheduler():
         "success": True,
         "scheduler_enabled": settings['scheduler_enabled']
     })
+
+
+# ==================== GOOGLE MAPS PROXY ====================
+
+@app.route('/api/geocode/reverse')
+def api_reverse_geocode():
+    """Reverse geocode lat/lng to address"""
+    lat = request.args.get('lat')
+    lng = request.args.get('lng')
+    
+    if not lat or not lng:
+        return jsonify({"error": "lat and lng required"}), 400
+    
+    api_key = os.getenv("GOOGLE_MAPS_API_KEY")
+    try:
+        res = http_requests.get("https://maps.googleapis.com/maps/api/geocode/json", params={
+            "latlng": f"{lat},{lng}",
+            "key": api_key
+        }, timeout=10)
+        data = res.json()
+        
+        if data.get("status") == "OK" and data.get("results"):
+            result = data["results"][0]
+            return jsonify({
+                "address": result.get("formatted_address", ""),
+                "lat": float(lat),
+                "lng": float(lng),
+                "place_id": result.get("place_id", "")
+            })
+        
+        return jsonify({"error": "No results", "status": data.get("status")}), 404
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route('/api/places/autocomplete')
+def api_places_autocomplete():
+    """Proxy Google Places Autocomplete"""
+    query = request.args.get('query', '')
+    
+    if not query or len(query) < 2:
+        return jsonify([])
+    
+    api_key = os.getenv("GOOGLE_MAPS_API_KEY")
+    try:
+        res = http_requests.get("https://maps.googleapis.com/maps/api/place/autocomplete/json", params={
+            "input": query,
+            "location": "-1.2921,36.8219",
+            "radius": 50000,
+            "key": api_key
+        }, timeout=10)
+        data = res.json()
+        
+        predictions = []
+        for p in data.get("predictions", []):
+            predictions.append({
+                "description": p.get("description", ""),
+                "place_id": p.get("place_id", ""),
+                "main_text": p.get("structured_formatting", {}).get("main_text", ""),
+                "secondary_text": p.get("structured_formatting", {}).get("secondary_text", "")
+            })
+        
+        return jsonify(predictions)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route('/api/places/details')
+def api_place_details():
+    """Get place details (coordinates) from place_id"""
+    place_id = request.args.get('place_id', '')
+    
+    if not place_id:
+        return jsonify({"error": "place_id required"}), 400
+    
+    api_key = os.getenv("GOOGLE_MAPS_API_KEY")
+    try:
+        res = http_requests.get("https://maps.googleapis.com/maps/api/place/details/json", params={
+            "place_id": place_id,
+            "fields": "geometry,formatted_address,name",
+            "key": api_key
+        }, timeout=10)
+        data = res.json()
+        
+        if data.get("status") == "OK":
+            result = data["result"]
+            loc = result.get("geometry", {}).get("location", {})
+            return jsonify({
+                "name": result.get("name", ""),
+                "address": result.get("formatted_address", ""),
+                "lat": loc.get("lat"),
+                "lng": loc.get("lng")
+            })
+        
+        return jsonify({"error": "Not found"}), 404
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route('/api/directions/preview')
+def api_directions_preview():
+    """Preview route and return polyline for map display"""
+    origin = request.args.get('origin', '')
+    destination = request.args.get('destination', '')
+    waypoints = request.args.get('waypoints', '')
+    
+    if not origin or not destination:
+        return jsonify({"error": "origin and destination required"}), 400
+    
+    api_key = os.getenv("GOOGLE_MAPS_API_KEY")
+    params = {
+        "origin": origin,
+        "destination": destination,
+        "key": api_key
+    }
+    if waypoints:
+        params["waypoints"] = waypoints
+    
+    try:
+        res = http_requests.get("https://maps.googleapis.com/maps/api/directions/json",
+                                params=params, timeout=20)
+        data = res.json()
+        
+        if data.get("status") == "OK" and data.get("routes"):
+            route = data["routes"][0]
+            legs = route.get("legs", [])
+            total_distance = sum(l.get("distance", {}).get("value", 0) for l in legs)
+            total_duration = sum(l.get("duration", {}).get("value", 0) for l in legs)
+            
+            return jsonify({
+                "polyline": route.get("overview_polyline", {}).get("points", ""),
+                "distance_text": f"{total_distance / 1000:.1f} km",
+                "duration_text": f"{total_duration // 60} mins",
+                "bounds": route.get("bounds", {})
+            })
+        
+        return jsonify({"error": data.get("status", "Unknown error")}), 400
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 
 # ==================== HEALTH ====================

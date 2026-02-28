@@ -167,16 +167,16 @@ class TrafficAnalyzer:
             
             if result:
                 results.append(result)
-                icon = "ðŸš¦" if result.has_traffic_data else "â±ï¸"
+                icon = "🚦" if result.has_traffic_data else "⏱️"
                 logger.info(f"  {icon} {result.duration_text} ({result.distance_text})")
             else:
-                logger.warning(f"  âœ— Failed to get data")
+                logger.warning(f"  ✗ Failed to get data")
         
         # Sort by duration
         results.sort(key=lambda x: x.duration_seconds)
         
         if results:
-            logger.info(f"âœ… Best route: {results[0].name} ({results[0].duration_text})")
+            logger.info(f"✅ Best route: {results[0].name} ({results[0].duration_text})")
         
         return results
 

@@ -838,6 +838,270 @@
         }
 
         .route-item { cursor: pointer; }
+
+        /* Route Builder */
+        .route-builder {
+            background: var(--bg-card);
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            width: 96%;
+            max-width: 1300px;
+            height: 88vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .rb-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            flex-shrink: 0;
+        }
+
+        .rb-header-actions {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .rb-body {
+            display: flex;
+            flex: 1;
+            min-height: 0;
+        }
+
+        #builder-map {
+            flex: 1;
+            min-height: 300px;
+            height: 100%;
+            width: 100%;
+            cursor: crosshair;
+        }
+
+        .rb-panel {
+            width: 340px;
+            background: var(--bg-secondary);
+            padding: 1rem;
+            overflow-y: auto;
+            border-left: 1px solid var(--border-color);
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        @media (max-width: 768px) {
+            .rb-body { flex-direction: column; }
+            .rb-panel {
+                width: 100%;
+                max-height: 50vh;
+                border-left: none;
+                border-top: 1px solid var(--border-color);
+            }
+        }
+
+        .rb-point-section {
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .rb-point-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .rb-point-badge {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.75rem;
+            color: #000;
+            flex-shrink: 0;
+        }
+
+        .rb-point-badge.origin { background: var(--accent-green); }
+        .rb-point-badge.dest { background: var(--accent-red); color: #fff; }
+        .rb-point-badge.wp {
+            background: var(--bg-card);
+            border: 2px solid var(--accent-blue);
+            color: var(--accent-blue);
+            width: 22px;
+            height: 22px;
+            font-size: 0.7rem;
+        }
+
+        .btn-link {
+            background: none;
+            border: none;
+            color: var(--accent-blue);
+            cursor: pointer;
+            font-size: 0.85rem;
+            margin-left: auto;
+            font-family: 'Outfit', sans-serif;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            transition: background 0.2s;
+        }
+
+        .btn-link:hover { background: rgba(0, 212, 255, 0.1); }
+
+        .btn-link.active-pick {
+            background: rgba(0, 212, 255, 0.2);
+            color: var(--accent-green);
+            animation: pulse 1s infinite;
+        }
+
+        .rb-search-container {
+            position: relative;
+        }
+
+        .rb-search {
+            width: 100%;
+            padding: 0.6rem 0.75rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-primary);
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.85rem;
+        }
+
+        .rb-search:focus {
+            outline: none;
+            border-color: var(--accent-green);
+        }
+
+        .rb-suggestions {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 0 0 6px 6px;
+            max-height: 200px;
+            overflow-y: auto;
+            z-index: 100;
+        }
+
+        .rb-suggestion-item {
+            padding: 0.6rem 0.75rem;
+            cursor: pointer;
+            font-size: 0.85rem;
+            border-bottom: 1px solid var(--border-color);
+            transition: background 0.15s;
+        }
+
+        .rb-suggestion-item:hover {
+            background: rgba(0, 255, 135, 0.1);
+        }
+
+        .rb-suggestion-item .main-text {
+            font-weight: 500;
+        }
+
+        .rb-suggestion-item .secondary-text {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin-top: 0.15rem;
+        }
+
+        .rb-point-detail {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-top: 0.35rem;
+            padding: 0.35rem 0.5rem;
+            background: var(--bg-card);
+            border-radius: 4px;
+            display: none;
+        }
+
+        .rb-point-detail.visible { display: block; }
+
+        .rb-waypoints-list {
+            max-height: 200px;
+            overflow-y: auto;
+            margin-top: 0.5rem;
+        }
+
+        .rb-wp-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem;
+            background: var(--bg-card);
+            border-radius: 6px;
+            margin-bottom: 0.35rem;
+            font-size: 0.8rem;
+            cursor: grab;
+        }
+
+        .rb-wp-item:active { cursor: grabbing; }
+
+        .rb-wp-item.dragging {
+            opacity: 0.5;
+            background: rgba(0, 212, 255, 0.1);
+        }
+
+        .rb-wp-name {
+            flex: 1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .rb-wp-remove {
+            background: none;
+            border: none;
+            color: var(--accent-red);
+            cursor: pointer;
+            font-size: 1rem;
+            padding: 0 0.25rem;
+            flex-shrink: 0;
+        }
+
+        .rb-preview-info {
+            display: flex;
+            gap: 1rem;
+            padding: 0.75rem;
+            background: rgba(0, 255, 135, 0.1);
+            border-radius: 8px;
+            margin-top: auto;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--accent-green);
+            justify-content: center;
+        }
+
+        .picking-mode #builder-map {
+            cursor: crosshair !important;
+        }
+
+        .rb-pick-banner {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--accent-blue);
+            color: #000;
+            padding: 0.5rem 1.5rem;
+            border-radius: 100px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            z-index: 500;
+            pointer-events: none;
+        }
     </style>
 </head>
 <body>
@@ -952,57 +1216,80 @@
         </div>
     </div>
 
-    <!-- Add/Edit Route Modal -->
+    <!-- Route Builder Modal -->
     <div class="modal-overlay hidden" id="route-modal">
-        <div class="modal">
-            <div class="modal-header">
-                <h3 id="modal-title">Add New Route</h3>
-                <button class="modal-close" onclick="closeModal()">&times;</button>
+        <div class="route-builder">
+            <div class="rb-header">
+                <h3 id="modal-title">🗺️ Route Builder</h3>
+                <div class="rb-header-actions">
+                    <button class="btn btn-secondary btn-sm" onclick="previewRoute()">👁️ Preview Route</button>
+                    <button class="btn btn-primary btn-sm" onclick="saveRouteFromBuilder()">💾 Save Route</button>
+                    <button class="modal-close" onclick="closeModal()">&times;</button>
+                </div>
             </div>
-            
-            <form id="route-form" onsubmit="saveRoute(event)">
-                <input type="hidden" id="route-id">
-                
-                <div class="form-group">
-                    <label>Route Name *</label>
-                    <input type="text" id="route-name" required placeholder="e.g., Route 1: Via Mombasa Road">
-                </div>
-                
-                <div class="form-row">
+            <div class="rb-body">
+                <div id="builder-map"></div>
+                <div class="rb-panel">
                     <div class="form-group">
-                        <label>Origin Name</label>
-                        <input type="text" id="route-origin-name" placeholder="e.g., Pitman House">
+                        <label>Route Name *</label>
+                        <input type="text" id="route-name" required placeholder="e.g., Route 4: Via Langata">
                     </div>
-                    <div class="form-group">
-                        <label>Destination Name</label>
-                        <input type="text" id="route-dest-name" placeholder="e.g., Home">
+
+                    <!-- Origin -->
+                    <div class="rb-point-section">
+                        <div class="rb-point-header">
+                            <span class="rb-point-badge origin">A</span>
+                            <span>Origin</span>
+                            <button class="btn-link" id="btn-pick-origin" onclick="startPicking('origin')" title="Pick on map">📍 Pick</button>
+                        </div>
+                        <div class="rb-search-container">
+                            <input type="text" id="origin-search" class="rb-search" placeholder="Search place or click map..." oninput="searchPlaces(this.value, 'origin')">
+                            <div class="rb-suggestions hidden" id="origin-suggestions"></div>
+                        </div>
+                        <div class="rb-point-detail" id="origin-detail"></div>
+                        <input type="hidden" id="route-origin">
+                        <input type="hidden" id="route-origin-name">
                     </div>
-                </div>
-                
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>Origin Coordinates *</label>
-                        <input type="text" id="route-origin" required placeholder="-1.288121, 36.800852">
-                        <p class="form-hint">Latitude, Longitude</p>
+
+                    <!-- Destination -->
+                    <div class="rb-point-section">
+                        <div class="rb-point-header">
+                            <span class="rb-point-badge dest">B</span>
+                            <span>Destination</span>
+                            <button class="btn-link" id="btn-pick-dest" onclick="startPicking('destination')" title="Pick on map">📍 Pick</button>
+                        </div>
+                        <div class="rb-search-container">
+                            <input type="text" id="dest-search" class="rb-search" placeholder="Search place or click map..." oninput="searchPlaces(this.value, 'destination')">
+                            <div class="rb-suggestions hidden" id="dest-suggestions"></div>
+                        </div>
+                        <div class="rb-point-detail" id="dest-detail"></div>
+                        <input type="hidden" id="route-dest">
+                        <input type="hidden" id="route-dest-name">
                     </div>
-                    <div class="form-group">
-                        <label>Destination Coordinates *</label>
-                        <input type="text" id="route-dest" required placeholder="-1.304990, 36.908390">
-                        <p class="form-hint">Latitude, Longitude</p>
+
+                    <!-- Waypoints -->
+                    <div class="rb-point-section" style="flex:1;min-height:0;">
+                        <div class="rb-point-header">
+                            <span>📌 Waypoints</span>
+                            <button class="btn-link" id="btn-pick-waypoint" onclick="startPicking('waypoint')" title="Add by clicking map">📍 Add</button>
+                        </div>
+                        <div class="rb-search-container">
+                            <input type="text" id="waypoint-search" class="rb-search" placeholder="Search to add waypoint..." oninput="searchPlaces(this.value, 'waypoint')">
+                            <div class="rb-suggestions hidden" id="waypoint-suggestions"></div>
+                        </div>
+                        <div class="rb-waypoints-list" id="waypoints-list"></div>
+                        <p class="form-hint" style="margin-top:0.5rem;">Click map to add • Drag to reorder • Click ✕ to remove</p>
                     </div>
+
+                    <!-- Route Preview Info -->
+                    <div class="rb-preview-info hidden" id="route-preview-info">
+                        <span id="preview-distance"></span>
+                        <span id="preview-duration"></span>
+                    </div>
+
+                    <input type="hidden" id="route-id">
                 </div>
-                
-                <div class="form-group">
-                    <label>Waypoints (Optional)</label>
-                    <textarea id="route-waypoints" placeholder="-1.2894753, 36.8096695|-1.2892811, 36.8119622"></textarea>
-                    <p class="form-hint">Pipe-separated coordinates: lat,lng|lat,lng|...</p>
-                </div>
-                
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Save Route</button>
-                </div>
-            </form>
+            </div>
         </div>
     </div>
 
@@ -1108,51 +1395,499 @@
             }
         }
 
-        // ==================== ROUTE MANAGEMENT ====================
+        // ==================== ROUTE BUILDER ====================
+        let builderMap = null;
+        let builderLayers = [];
+        let builderOrigin = null;    // {lat, lng, name}
+        let builderDest = null;
+        let builderWaypoints = [];   // [{lat, lng, name}, ...]
+        let pickingMode = null;      // 'origin' | 'destination' | 'waypoint' | null
+        let searchTimeout = null;
+        let previewPolyline = null;
+        let pickBanner = null;
+        let dragIndex = null;
+
         function showAddRouteModal() {
-            document.getElementById('modal-title').textContent = 'Add New Route';
-            document.getElementById('route-form').reset();
+            document.getElementById('modal-title').textContent = '🗺️ Route Builder — New Route';
             document.getElementById('route-id').value = '';
+            document.getElementById('route-name').value = '';
+            builderOrigin = null;
+            builderDest = null;
+            builderWaypoints = [];
+            pickingMode = null;
             document.getElementById('route-modal').classList.remove('hidden');
+            setTimeout(() => initBuilderMap(), 200);
         }
 
         function editRoute(routeId) {
             const route = routes.find(r => r.id === routeId);
             if (!route) return;
 
-            document.getElementById('modal-title').textContent = 'Edit Route';
+            document.getElementById('modal-title').textContent = '🗺️ Route Builder — Edit';
             document.getElementById('route-id').value = route.id;
             document.getElementById('route-name').value = route.name || '';
-            document.getElementById('route-origin-name').value = route.origin_name || '';
-            document.getElementById('route-dest-name').value = route.destination_name || '';
-            document.getElementById('route-origin').value = route.origin || '';
-            document.getElementById('route-dest').value = route.destination || '';
-            document.getElementById('route-waypoints').value = route.waypoints || '';
+
+            // Parse origin
+            if (route.origin) {
+                const [lat, lng] = route.origin.split(',').map(Number);
+                builderOrigin = { lat, lng, name: route.origin_name || route.origin };
+            } else {
+                builderOrigin = null;
+            }
+
+            // Parse destination
+            if (route.destination) {
+                const [lat, lng] = route.destination.split(',').map(Number);
+                builderDest = { lat, lng, name: route.destination_name || route.destination };
+            } else {
+                builderDest = null;
+            }
+
+            // Parse waypoints
+            builderWaypoints = [];
+            if (route.waypoints) {
+                route.waypoints.split('|').filter(Boolean).forEach(wp => {
+                    const parts = wp.trim().split(',').map(s => s.trim());
+                    if (parts.length >= 2) {
+                        builderWaypoints.push({
+                            lat: parseFloat(parts[0]),
+                            lng: parseFloat(parts[1]),
+                            name: `${parseFloat(parts[0]).toFixed(5)}, ${parseFloat(parts[1]).toFixed(5)}`
+                        });
+                    }
+                });
+            }
+
+            pickingMode = null;
             document.getElementById('route-modal').classList.remove('hidden');
+            setTimeout(() => initBuilderMap(), 200);
         }
 
         function closeModal() {
             document.getElementById('route-modal').classList.add('hidden');
+            if (builderMap) {
+                builderMap.remove();
+                builderMap = null;
+            }
+            builderLayers = [];
+            pickingMode = null;
+            // Clear search fields
+            ['origin-search', 'dest-search', 'waypoint-search'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.value = '';
+            });
+            hideSuggestions('origin');
+            hideSuggestions('dest');
+            hideSuggestions('waypoint');
         }
 
-        async function saveRoute(e) {
+        function initBuilderMap() {
+            const container = document.getElementById('builder-map');
+
+            if (builderMap) {
+                builderMap.remove();
+                builderMap = null;
+            }
+
+            builderMap = L.map(container, {
+                zoomControl: true,
+                attributionControl: false,
+                center: [-1.296, 36.85],
+                zoom: 13
+            });
+
+            L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+                maxZoom: 19
+            }).addTo(builderMap);
+
+            builderMap.on('click', onBuilderMapClick);
+
+            setTimeout(() => {
+                builderMap.invalidateSize();
+                refreshBuilderMarkers();
+            }, 150);
+        }
+
+        async function onBuilderMapClick(e) {
+            const { lat, lng } = e.latlng;
+
+            if (!pickingMode) {
+                // Default: add waypoint
+                if (builderOrigin && builderDest) {
+                    await addPointFromCoords(lat, lng, 'waypoint');
+                } else if (!builderOrigin) {
+                    await addPointFromCoords(lat, lng, 'origin');
+                } else {
+                    await addPointFromCoords(lat, lng, 'destination');
+                }
+            } else {
+                await addPointFromCoords(lat, lng, pickingMode);
+                stopPicking();
+            }
+        }
+
+        async function addPointFromCoords(lat, lng, type) {
+            // Reverse geocode
+            let name = `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
+            try {
+                const res = await fetch(`/api/geocode/reverse?lat=${lat}&lng=${lng}`);
+                if (res.ok) {
+                    const data = await res.json();
+                    name = data.address || name;
+                }
+            } catch (e) { /* use coords */ }
+
+            setPoint(type, { lat, lng, name });
+        }
+
+        function setPoint(type, point) {
+            if (type === 'origin') {
+                builderOrigin = point;
+                document.getElementById('origin-search').value = point.name;
+                showPointDetail('origin', point);
+            } else if (type === 'destination') {
+                builderDest = point;
+                document.getElementById('dest-search').value = point.name;
+                showPointDetail('dest', point);
+            } else if (type === 'waypoint') {
+                builderWaypoints.push(point);
+            }
+
+            refreshBuilderMarkers();
+        }
+
+        function showPointDetail(prefix, point) {
+            const el = document.getElementById(`${prefix}-detail`);
+            if (el) {
+                el.textContent = `${point.lat.toFixed(6)}, ${point.lng.toFixed(6)}`;
+                el.classList.add('visible');
+            }
+        }
+
+        function startPicking(type) {
+            pickingMode = type;
+            // Highlight the active pick button
+            document.querySelectorAll('.btn-link').forEach(b => b.classList.remove('active-pick'));
+            const btnId = type === 'origin' ? 'btn-pick-origin' :
+                          type === 'destination' ? 'btn-pick-dest' : 'btn-pick-waypoint';
+            document.getElementById(btnId)?.classList.add('active-pick');
+
+            // Show banner on map
+            if (pickBanner) pickBanner.remove();
+            const mapContainer = document.getElementById('builder-map');
+            pickBanner = document.createElement('div');
+            pickBanner.className = 'rb-pick-banner';
+            const labels = { origin: 'Click map to set Origin', destination: 'Click map to set Destination', waypoint: 'Click map to add Waypoint' };
+            pickBanner.textContent = labels[type] || 'Click map...';
+            mapContainer.parentElement.style.position = 'relative';
+            mapContainer.parentElement.appendChild(pickBanner);
+        }
+
+        function stopPicking() {
+            pickingMode = null;
+            document.querySelectorAll('.btn-link').forEach(b => b.classList.remove('active-pick'));
+            if (pickBanner) { pickBanner.remove(); pickBanner = null; }
+        }
+
+        // ==================== SEARCH / AUTOCOMPLETE ====================
+        function searchPlaces(query, type) {
+            clearTimeout(searchTimeout);
+            if (!query || query.length < 2) {
+                hideSuggestions(type);
+                return;
+            }
+
+            searchTimeout = setTimeout(async () => {
+                try {
+                    const res = await fetch(`/api/places/autocomplete?query=${encodeURIComponent(query)}`);
+                    if (!res.ok) return;
+                    const predictions = await res.json();
+                    showSuggestions(type, predictions);
+                } catch (e) { console.error('Search error:', e); }
+            }, 300);
+        }
+
+        function showSuggestions(type, predictions) {
+            const prefix = type === 'destination' ? 'dest' : type;
+            const container = document.getElementById(`${prefix}-suggestions`);
+            if (!container) return;
+
+            if (!predictions.length) {
+                container.classList.add('hidden');
+                return;
+            }
+
+            container.innerHTML = predictions.map(p => `
+                <div class="rb-suggestion-item" onclick="selectSuggestion('${type}', '${p.place_id}', '${p.description.replace(/'/g, "\\'")}')">
+                    <div class="main-text">${p.main_text}</div>
+                    <div class="secondary-text">${p.secondary_text}</div>
+                </div>
+            `).join('');
+            container.classList.remove('hidden');
+        }
+
+        function hideSuggestions(type) {
+            const prefix = type === 'destination' ? 'dest' : type;
+            const container = document.getElementById(`${prefix}-suggestions`);
+            if (container) container.classList.add('hidden');
+        }
+
+        async function selectSuggestion(type, placeId, description) {
+            hideSuggestions(type);
+
+            try {
+                const res = await fetch(`/api/places/details?place_id=${placeId}`);
+                if (!res.ok) return;
+                const place = await res.json();
+
+                const point = {
+                    lat: place.lat,
+                    lng: place.lng,
+                    name: place.name || description
+                };
+
+                setPoint(type, point);
+
+                // Update search input
+                const inputId = type === 'origin' ? 'origin-search' :
+                                type === 'destination' ? 'dest-search' : 'waypoint-search';
+                document.getElementById(inputId).value = type === 'waypoint' ? '' : point.name;
+            } catch (e) {
+                console.error('Place details error:', e);
+            }
+        }
+
+        // Close suggestions when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.rb-search-container')) {
+                hideSuggestions('origin');
+                hideSuggestions('dest');
+                hideSuggestions('waypoint');
+            }
+        });
+
+        // ==================== WAYPOINT LIST ====================
+        function renderWaypointsList() {
+            const container = document.getElementById('waypoints-list');
+            if (!container) return;
+
+            if (!builderWaypoints.length) {
+                container.innerHTML = '<p style="color:var(--text-secondary);font-size:0.8rem;text-align:center;padding:0.5rem;">No waypoints yet</p>';
+                return;
+            }
+
+            container.innerHTML = builderWaypoints.map((wp, i) => `
+                <div class="rb-wp-item" draggable="true"
+                     ondragstart="onWpDragStart(event, ${i})"
+                     ondragover="onWpDragOver(event, ${i})"
+                     ondrop="onWpDrop(event, ${i})"
+                     ondragend="onWpDragEnd(event)">
+                    <span class="rb-point-badge wp">${i + 1}</span>
+                    <span class="rb-wp-name" title="${wp.name}">${wp.name}</span>
+                    <button class="rb-wp-remove" onclick="removeWaypoint(${i})">✕</button>
+                </div>
+            `).join('');
+        }
+
+        function removeWaypoint(index) {
+            builderWaypoints.splice(index, 1);
+            refreshBuilderMarkers();
+        }
+
+        function onWpDragStart(e, index) {
+            dragIndex = index;
+            e.target.classList.add('dragging');
+            e.dataTransfer.effectAllowed = 'move';
+        }
+
+        function onWpDragOver(e, index) {
             e.preventDefault();
-            
+            e.dataTransfer.dropEffect = 'move';
+        }
+
+        function onWpDrop(e, index) {
+            e.preventDefault();
+            if (dragIndex === null || dragIndex === index) return;
+            const item = builderWaypoints.splice(dragIndex, 1)[0];
+            builderWaypoints.splice(index, 0, item);
+            dragIndex = null;
+            refreshBuilderMarkers();
+        }
+
+        function onWpDragEnd(e) {
+            e.target.classList.remove('dragging');
+            dragIndex = null;
+        }
+
+        // ==================== MAP MARKERS ====================
+        function refreshBuilderMarkers() {
+            if (!builderMap) return;
+
+            builderLayers.forEach(l => builderMap.removeLayer(l));
+            builderLayers = [];
+
+            const allPoints = [];
+
+            // Origin marker
+            if (builderOrigin) {
+                const icon = L.divIcon({
+                    className: '',
+                    html: '<div style="background:#00ff87;color:#000;font-weight:700;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;border:3px solid #fff;box-shadow:0 2px 10px rgba(0,0,0,0.5);">A</div>',
+                    iconSize: [30, 30], iconAnchor: [15, 15]
+                });
+                const m = L.marker([builderOrigin.lat, builderOrigin.lng], { icon })
+                    .bindPopup(`<b>Origin:</b> ${builderOrigin.name}`)
+                    .addTo(builderMap);
+                builderLayers.push(m);
+                allPoints.push([builderOrigin.lat, builderOrigin.lng]);
+            }
+
+            // Destination marker
+            if (builderDest) {
+                const icon = L.divIcon({
+                    className: '',
+                    html: '<div style="background:#ff6b6b;color:#fff;font-weight:700;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;border:3px solid #fff;box-shadow:0 2px 10px rgba(0,0,0,0.5);">B</div>',
+                    iconSize: [30, 30], iconAnchor: [15, 15]
+                });
+                const m = L.marker([builderDest.lat, builderDest.lng], { icon })
+                    .bindPopup(`<b>Destination:</b> ${builderDest.name}`)
+                    .addTo(builderMap);
+                builderLayers.push(m);
+                allPoints.push([builderDest.lat, builderDest.lng]);
+            }
+
+            // Waypoint markers
+            builderWaypoints.forEach((wp, i) => {
+                const icon = L.divIcon({
+                    className: '',
+                    html: `<div style="background:#1a1a24;color:#00d4ff;font-weight:700;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;border:2px solid #00d4ff;box-shadow:0 2px 6px rgba(0,0,0,0.4);">${i + 1}</div>`,
+                    iconSize: [24, 24], iconAnchor: [12, 12]
+                });
+                const m = L.marker([wp.lat, wp.lng], { icon })
+                    .bindPopup(`<b>Waypoint ${i + 1}:</b> ${wp.name}`)
+                    .addTo(builderMap);
+                builderLayers.push(m);
+                allPoints.push([wp.lat, wp.lng]);
+            });
+
+            // Draw connecting line (simple straight lines between points)
+            if (allPoints.length >= 2) {
+                const ordered = [];
+                if (builderOrigin) ordered.push([builderOrigin.lat, builderOrigin.lng]);
+                builderWaypoints.forEach(wp => ordered.push([wp.lat, wp.lng]));
+                if (builderDest) ordered.push([builderDest.lat, builderDest.lng]);
+
+                if (ordered.length >= 2) {
+                    const line = L.polyline(ordered, {
+                        color: '#00d4ff',
+                        weight: 2,
+                        opacity: 0.4,
+                        dashArray: '8, 8'
+                    }).addTo(builderMap);
+                    builderLayers.push(line);
+                }
+            }
+
+            // Fit bounds
+            if (allPoints.length) {
+                builderMap.fitBounds(allPoints, { padding: [50, 50], maxZoom: 15 });
+            }
+
+            // Update UI
+            renderWaypointsList();
+            updatePointDetails();
+        }
+
+        function updatePointDetails() {
+            if (builderOrigin) {
+                document.getElementById('origin-search').value = builderOrigin.name;
+                showPointDetail('origin', builderOrigin);
+            } else {
+                document.getElementById('origin-search').value = '';
+                document.getElementById('origin-detail').classList.remove('visible');
+            }
+
+            if (builderDest) {
+                document.getElementById('dest-search').value = builderDest.name;
+                showPointDetail('dest', builderDest);
+            } else {
+                document.getElementById('dest-search').value = '';
+                document.getElementById('dest-detail').classList.remove('visible');
+            }
+        }
+
+        // ==================== PREVIEW & SAVE ====================
+        async function previewRoute() {
+            if (!builderOrigin || !builderDest) {
+                alert('Set both origin and destination first.');
+                return;
+            }
+
+            const origin = `${builderOrigin.lat},${builderOrigin.lng}`;
+            const dest = `${builderDest.lat},${builderDest.lng}`;
+            const wps = builderWaypoints.map(w => `${w.lat},${w.lng}`).join('|');
+
+            try {
+                const url = `/api/directions/preview?origin=${origin}&destination=${dest}${wps ? '&waypoints=' + wps : ''}`;
+                const res = await fetch(url);
+                if (!res.ok) {
+                    alert('Failed to preview route.');
+                    return;
+                }
+                const data = await res.json();
+
+                // Remove old preview
+                if (previewPolyline) {
+                    builderMap.removeLayer(previewPolyline);
+                    previewPolyline = null;
+                }
+
+                // Draw preview polyline
+                if (data.polyline) {
+                    const coords = decodePolyline(data.polyline);
+                    previewPolyline = L.polyline(coords, {
+                        color: '#00ff87',
+                        weight: 5,
+                        opacity: 0.8
+                    }).addTo(builderMap);
+                    builderLayers.push(previewPolyline);
+                    builderMap.fitBounds(coords, { padding: [50, 50] });
+                }
+
+                // Show info
+                const info = document.getElementById('route-preview-info');
+                document.getElementById('preview-distance').textContent = `📏 ${data.distance_text}`;
+                document.getElementById('preview-duration').textContent = `⏱️ ${data.duration_text}`;
+                info.classList.remove('hidden');
+
+            } catch (e) {
+                console.error('Preview error:', e);
+                alert('Failed to preview route.');
+            }
+        }
+
+        async function saveRouteFromBuilder() {
+            const name = document.getElementById('route-name').value.trim();
+            if (!name) { alert('Enter a route name.'); return; }
+            if (!builderOrigin) { alert('Set an origin point.'); return; }
+            if (!builderDest) { alert('Set a destination point.'); return; }
+
             const routeId = document.getElementById('route-id').value;
+            const waypoints = builderWaypoints.map(w => `${w.lat}, ${w.lng}`).join('|');
+
             const route = {
-                name: document.getElementById('route-name').value,
-                origin_name: document.getElementById('route-origin-name').value,
-                destination_name: document.getElementById('route-dest-name').value,
-                origin: document.getElementById('route-origin').value,
-                destination: document.getElementById('route-dest').value,
-                waypoints: document.getElementById('route-waypoints').value,
+                name: name,
+                origin: `${builderOrigin.lat}, ${builderOrigin.lng}`,
+                destination: `${builderDest.lat}, ${builderDest.lng}`,
+                origin_name: builderOrigin.name,
+                destination_name: builderDest.name,
+                waypoints: waypoints,
                 enabled: true
             };
 
             try {
                 const url = routeId ? `/api/routes/${routeId}` : '/api/routes';
                 const method = routeId ? 'PUT' : 'POST';
-                
                 const res = await fetch(url, {
                     method,
                     headers: { 'Content-Type': 'application/json' },
