@@ -70,7 +70,10 @@ class TrafficAnalyzer:
         }
         
         if route.waypoints:
-            params["waypoints"] = route.waypoints
+            # Use via: prefix so Google treats them as pass-through points
+            # This enables continuous traffic calculation instead of per-leg
+            wp_parts = [w.strip() for w in route.waypoints.split('|') if w.strip()]
+            params["waypoints"] = '|'.join(['via:' + w for w in wp_parts])
         
         response = requests.get(self.base_url, params=params, timeout=20)
         response.raise_for_status()
@@ -123,19 +126,33 @@ class TrafficAnalyzer:
         # Extract overview polyline
         overview_polyline = api_route.get("overview_polyline", {}).get("points", "")
         
-        # Extract waypoint coordinates from legs
+        # Extract waypoint coordinates
         waypoint_coords = []
+        # Origin
         waypoint_coords.append({
             "lat": legs[0]["start_location"]["lat"],
             "lng": legs[0]["start_location"]["lng"],
             "label": legs[0].get("start_address", "Origin")
         })
-        for leg in legs[:-1]:
-            waypoint_coords.append({
-                "lat": leg["end_location"]["lat"],
-                "lng": leg["end_location"]["lng"],
-                "label": leg.get("end_address", "Waypoint")
-            })
+        
+        # With via: waypoints, Google returns 1 leg, so extract waypoints from route config
+        if route.waypoints:
+            wp_parts = [w.strip() for w in route.waypoints.split('|') if w.strip()]
+            for i, wp in enumerate(wp_parts):
+                # Remove via: prefix if present
+                wp_clean = wp.replace('via:', '').strip()
+                parts = wp_clean.split(',')
+                if len(parts) >= 2:
+                    try:
+                        waypoint_coords.append({
+                            "lat": float(parts[0].strip()),
+                            "lng": float(parts[1].strip()),
+                            "label": f"Waypoint {i + 1}"
+                        })
+                    except ValueError:
+                        pass
+        
+        # Destination
         waypoint_coords.append({
             "lat": legs[-1]["end_location"]["lat"],
             "lng": legs[-1]["end_location"]["lng"],

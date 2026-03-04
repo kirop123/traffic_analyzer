@@ -6,7 +6,7 @@ services:
     container_name: traffic-analyzer
     restart: unless-stopped
     ports:
-      - "5000:5000"
+      - "5050:5000"
     environment:
       - GOOGLE_MAPS_API_KEY=${GOOGLE_MAPS_API_KEY}
       - EMAIL_SENDER=${EMAIL_SENDER:-}
@@ -17,6 +17,9 @@ services:
       - FORCE_RUN=${FORCE_RUN:-false}
       - FLASK_DEBUG=${FLASK_DEBUG:-false}
       - DATA_DIR=/app/data
+      - APP_USERNAME=${APP_USERNAME:-admin}
+      - APP_PASSWORD=${APP_PASSWORD:-traffic2026}
+      - SECRET_KEY=${SECRET_KEY:-}
     volumes:
       - traffic-data:/app/data
       - traffic-logs:/app/logs

@@ -4,9 +4,11 @@ Flask web application for Traffic Analyzer Dashboard
 
 import os
 import logging
+import secrets
+import functools
 import requests as http_requests
 from datetime import datetime
-from flask import Flask, render_template, jsonify, request
+from flask import Flask, render_template, jsonify, request, session, redirect, url_for
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.cron import CronTrigger
 
@@ -22,6 +24,23 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
+app.secret_key = os.getenv("SECRET_KEY", secrets.token_hex(32))
+
+# Auth credentials from environment
+APP_USERNAME = os.getenv("APP_USERNAME", "admin")
+APP_PASSWORD = os.getenv("APP_PASSWORD", "traffic2026")
+
+
+def login_required(f):
+    """Decorator to require login for routes"""
+    @functools.wraps(f)
+    def decorated(*args, **kwargs):
+        if not session.get('logged_in'):
+            if request.is_json or request.path.startswith('/api/'):
+                return jsonify({"error": "Unauthorized"}), 401
+            return redirect(url_for('login'))
+        return f(*args, **kwargs)
+    return decorated
 
 # Initialize scheduler
 scheduler = BackgroundScheduler()
@@ -124,9 +143,40 @@ def update_scheduler():
         logger.info("📅 Scheduler disabled")
 
 
+# ==================== AUTH ROUTES ====================
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    """Login page"""
+    if session.get('logged_in'):
+        return redirect(url_for('dashboard'))
+    
+    error = None
+    if request.method == 'POST':
+        username = request.form.get('username', '')
+        password = request.form.get('password', '')
+        
+        if username == APP_USERNAME and password == APP_PASSWORD:
+            session['logged_in'] = True
+            session['username'] = username
+            return redirect(url_for('dashboard'))
+        else:
+            error = 'Invalid credentials'
+    
+    return render_template('login.html', error=error)
+
+
+@app.route('/logout')
+def logout():
+    """Logout"""
+    session.clear()
+    return redirect(url_for('login'))
+
+
 # ==================== PAGE ROUTES ====================
 
 @app.route('/')
+@login_required
 def dashboard():
     """Main dashboard page"""
     return render_template('dashboard.html')
@@ -135,6 +185,7 @@ def dashboard():
 # ==================== API ROUTES ====================
 
 @app.route('/api/latest')
+@login_required
 def api_latest():
     """Get latest analysis results"""
     store = get_data_store()
@@ -146,6 +197,7 @@ def api_latest():
 
 
 @app.route('/api/history')
+@login_required
 def api_history():
     """Get historical data"""
     days = request.args.get('days', 7, type=int)
@@ -155,6 +207,7 @@ def api_history():
 
 
 @app.route('/api/stats')
+@login_required
 def api_stats():
     """Get statistics"""
     days = request.args.get('days', 7, type=int)
@@ -164,6 +217,7 @@ def api_stats():
 
 
 @app.route('/api/analyze', methods=['POST'])
+@login_required
 def api_analyze():
     """Trigger manual analysis"""
     send_email = request.json.get('send_email', False) if request.json else False
@@ -189,6 +243,7 @@ def api_analyze():
 # ==================== ROUTES MANAGEMENT ====================
 
 @app.route('/api/routes', methods=['GET'])
+@login_required
 def api_get_routes():
     """Get all routes"""
     store = get_data_store()
@@ -197,6 +252,7 @@ def api_get_routes():
 
 
 @app.route('/api/routes', methods=['POST'])
+@login_required
 def api_add_route():
     """Add a new route"""
     route = request.json
@@ -224,6 +280,7 @@ def api_add_route():
 
 
 @app.route('/api/routes/<route_id>', methods=['PUT'])
+@login_required
 def api_update_route(route_id):
     """Update an existing route"""
     route = request.json
@@ -239,6 +296,7 @@ def api_update_route(route_id):
 
 
 @app.route('/api/routes/<route_id>', methods=['DELETE'])
+@login_required
 def api_delete_route(route_id):
     """Delete a route"""
     store = get_data_store()
@@ -249,6 +307,7 @@ def api_delete_route(route_id):
 
 
 @app.route('/api/routes/<route_id>/toggle', methods=['POST'])
+@login_required
 def api_toggle_route(route_id):
     """Toggle route enabled status"""
     store = get_data_store()
@@ -266,6 +325,7 @@ def api_toggle_route(route_id):
 # ==================== SETTINGS ====================
 
 @app.route('/api/settings', methods=['GET'])
+@login_required
 def api_get_settings():
     """Get application settings"""
     store = get_data_store()
@@ -276,6 +336,7 @@ def api_get_settings():
 
 
 @app.route('/api/settings', methods=['POST'])
+@login_required
 def api_save_settings():
     """Save application settings"""
     settings = request.json
@@ -293,6 +354,7 @@ def api_save_settings():
 
 
 @app.route('/api/settings/scheduler', methods=['POST'])
+@login_required
 def api_toggle_scheduler():
     """Toggle scheduler on/off"""
     store = get_data_store()
@@ -312,6 +374,7 @@ def api_toggle_scheduler():
 # ==================== GOOGLE MAPS PROXY ====================
 
 @app.route('/api/geocode/reverse')
+@login_required
 def api_reverse_geocode():
     """Reverse geocode lat/lng to address"""
     lat = request.args.get('lat')
@@ -343,6 +406,7 @@ def api_reverse_geocode():
 
 
 @app.route('/api/places/autocomplete')
+@login_required
 def api_places_autocomplete():
     """Proxy Google Places Autocomplete"""
     query = request.args.get('query', '')
@@ -375,6 +439,7 @@ def api_places_autocomplete():
 
 
 @app.route('/api/places/details')
+@login_required
 def api_place_details():
     """Get place details (coordinates) from place_id"""
     place_id = request.args.get('place_id', '')
@@ -407,6 +472,7 @@ def api_place_details():
 
 
 @app.route('/api/directions/preview')
+@login_required
 def api_directions_preview():
     """Preview route and return polyline for map display"""
     origin = request.args.get('origin', '')
@@ -423,7 +489,8 @@ def api_directions_preview():
         "key": api_key
     }
     if waypoints:
-        params["waypoints"] = waypoints
+        wp_parts = [w.strip() for w in waypoints.split('|') if w.strip()]
+        params["waypoints"] = '|'.join(['via:' + w for w in wp_parts])
     
     try:
         res = http_requests.get("https://maps.googleapis.com/maps/api/directions/json",
